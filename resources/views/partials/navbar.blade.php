@@ -50,11 +50,13 @@
         transform: scale(1.03);
     }
     .navbar-main .navbar-brand.navbar-brand-logo-only img {
-        height: 32px;
+        height: 28px;
         width: auto;
-        border-radius: 6px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
         object-fit: contain;
+        transition: transform 0.2s ease;
+    }
+    .navbar-main .navbar-brand.navbar-brand-logo-only:hover img {
+        transform: scale(1.04);
     }
     .navbar-main .navbar-brand img {
         height: 38px;
@@ -359,7 +361,7 @@
 <nav class="navbar-main">
     <div class="container d-flex align-items-center justify-content-between flex-nowrap">
         <a class="navbar-brand navbar-brand-logo-only" href="{{ $isPwa ? route('monitoring.index') : route('home') }}" title="{{ config('app.name', 'Tanikaya') }} - {{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}">
-            <img src="{{ asset('images/logo-tanikaya-banner.png') }}" alt="{{ config('app.name', 'Tanikaya') }}">
+            <img src="{{ asset('images/logo-tanikaya-transparent.png') }}" alt="{{ config('app.name', 'Tanikaya') }}">
         </a>
 
         <div class="nav-links-wrap ms-auto">

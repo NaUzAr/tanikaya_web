@@ -76,23 +76,21 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 4px;
+            padding: 6px 12px;
             background: transparent;
-            border-radius: 12px;
-            margin: 0 auto 12px;
-            box-shadow: 0 8px 24px rgba(250, 204, 21, 0.3);
+            margin: 0 auto 10px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .brand-logo-box:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 12px 28px rgba(250, 204, 21, 0.45);
+            transform: translateY(-2px) scale(1.03);
         }
 
         .brand-logo-box img {
-            height: 52px;
+            height: 44px;
             width: auto;
-            border-radius: 10px;
+            max-width: 260px;
+            object-fit: contain;
             display: block;
         }
 
@@ -391,7 +389,7 @@
         <!-- Brand Header (Only Logo + Attractive Tagline) -->
         <div class="text-center mb-4">
             <div class="brand-logo-box">
-                <img src="{{ asset('images/logo-tanikaya-banner.png') }}" alt="{{ config('app.name', 'Tanikaya') }}">
+                <img src="{{ asset('images/logo-tanikaya-transparent.png') }}" alt="{{ config('app.name', 'Tanikaya') }}">
             </div>
             <div>
                 <div class="brand-tagline-badge">
