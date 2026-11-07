@@ -1,0 +1,237 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Device;
+use App\Models\UserDevice;
+use Illuminate\Http\Request;
+
+class DeviceController extends Controller
+{
+    /**
+     * GET /api/devices
+     * Ambil semua device yang terhubung dengan user login
+     */
+    public function index(Request $request)
+    {
+        $devices = $request->user()
+            ->userDevices()
+            ->with(['device.sensors', 'device.outputs'])
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $devices,
+        ]);
+    }
+
+    /**
+     * POST /api/devices
+     * Tambah device ke monitoring user via token unik
+     */
+    public function store(Request $request)
+    {
+        $token = trim((string) $request->input('token', ''));
+        $request->merge(['token' => $token]);
+
+        $request->validate([
+            'token' => 'required|string|size:16',
+            'custom_name' => 'nullable|string|max:100',
+        ]);
+
+        $device = Device::where('token', $token)->first();
+        if (!$device) {
+            $device = Device::whereRaw('LOWER(token) = ?', [strtolower($token)])->first();
+        }
+
+        if (!$device) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Token tidak ditemukan! Pastikan token benar.',
+            ], 404);
+        }
+
+        $userId = $request->user()->id;
+        $exists = UserDevice::where('user_id', $userId)
+            ->where('device_id', $device->id)
+            ->exists();
+
+        if ($exists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Device ini sudah ada di daftar monitoring Anda.',
+            ], 409);
+        }
+
+        $userDevice = UserDevice::create([
+            'user_id' => $userId,
+            'device_id' => $device->id,
+            'custom_name' => $request->custom_name ?: $device->name,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => "Device '{$device->name}' berhasil ditambahkan!",
+            'data' => $userDevice->load('device'),
+        ], 201);
+    }
+
+    /**
+     * GET /api/devices/{id}
+     * Detail user device beserta sensors dan outputs
+     */
+    public function show(Request $request, $id)
+    {
+        $userDevice = UserDevice::with(['device.sensors', 'device.outputs'])
+            ->where('user_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$userDevice) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Device tidak ditemukan.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $userDevice,
+        ]);
+    }
+
+    /**
+     * DELETE /api/devices/{id}
+     * Hapus device dari monitoring user
+     */
+    public function destroy(Request $request, $id)
+    {
+        $userDevice = UserDevice::where('user_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$userDevice) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Device tidak ditemukan.',
+            ], 404);
+        }
+
+        $deviceName = $userDevice->custom_name;
+        $userDevice->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Device '{$deviceName}' berhasil dihapus.",
+        ]);
+    }
+
+    /**
+     * PUT /api/devices/{id}
+     * Update custom_name dan notes device
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'custom_name' => 'required|string|max:100',
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        $userDevice = UserDevice::where('user_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$userDevice) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Device tidak ditemukan.',
+            ], 404);
+        }
+
+        $userDevice->update([
+            'custom_name' => $request->custom_name,
+            'notes' => $request->notes,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Device berhasil diperbarui.',
+            'data' => $userDevice->load('device'),
+        ]);
+    }
+
+    /**
+     * POST /api/devices/{id}/favorite
+     * Toggle status favorit device
+     */
+    public function toggleFavorite(Request $request, $id)
+    {
+        $userDevice = UserDevice::where('user_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if (!$userDevice) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Device tidak ditemukan.',
+            ], 404);
+        }
+
+        $userDevice->is_favorite = !$userDevice->is_favorite;
+        $userDevice->save();
+
+        return response()->json([
+            'success' => true,
+            'is_favorite' => $userDevice->is_favorite,
+            'message' => $userDevice->is_favorite ? 'Ditambahkan ke favorit.' : 'Dihapus dari favorit.',
+        ]);
+    }
+
+    /**
+     * POST /api/devices/{id}/relay-status
+     * Minta status aktual relay dari device Smart Farm (CMD:RELAY_STATUS)
+     */
+    public function checkRelayStatus(Request $request, $id)
+    {
+        $userDevice = UserDevice::with('device')
+            ->where('user_id', $request->user()->id)
+            ->where(function ($query) use ($id) {
+                $query->where('id', $id)
+                      ->orWhere('device_id', $id);
+            })
+            ->first();
+
+        if (!$userDevice || !$userDevice->device) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Device tidak ditemukan.',
+            ], 404);
+        }
+
+        $device = $userDevice->device;
+        if ($device->type !== 'smart_farm') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Fitur ini hanya untuk device Smart Farm.',
+            ], 400);
+        }
+
+        $topic = $device->mqtt_topic_output ?: $device->mqtt_topic;
+        $smartFarmService = app(\App\Services\MqttSmartFarmService::class);
+        $smartFarmService->sendStatus($topic);
+        $success = $smartFarmService->sendRelayStatus($topic);
+
+        if ($success) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Permintaan status relay dan sistem dikirim ke device!',
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal mengirim permintaan status relay.',
+        ], 500);
+    }
+}

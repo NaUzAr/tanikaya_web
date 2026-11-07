@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profil Saya - {{ env('APP_NAME', 'Swaratani') }}</title>
+    @include('partials.pwa-head')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    @include('partials.theme')
+
+    <style>
+        .page-title {
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-header-card {
+            background: var(--card-bg, #ffffff);
+            border: 1px solid var(--glass-border, rgba(14, 165, 233, 0.15));
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar-lg {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--primary-gradient, linear-gradient(135deg, #0ea5e9, #0369a1));
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.25);
+        }
+
+        .form-card {
+            background: var(--card-bg, #ffffff);
+            border: 1px solid var(--glass-border, rgba(14, 165, 233, 0.15));
+            border-radius: 20px;
+            padding: 1.75rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            height: 100%;
+        }
+
+        .form-card-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--glass-border, #f1f5f9);
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 0.35rem;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            padding: 0.65rem 1rem;
+            border: 1px solid var(--glass-border, #cbd5e1);
+            background: var(--input-bg, #ffffff);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary, #0ea5e9);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+
+        .form-control:disabled, .form-control[readonly] {
+            background-color: rgba(100, 116, 139, 0.08);
+            color: #64748b;
+        }
+
+        .btn-submit {
+            background: var(--primary-gradient, linear-gradient(135deg, #0ea5e9, #0369a1));
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+        }
+
+        .badge-role {
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-admin {
+            background: rgba(239, 68, 68, 0.15);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-user {
+            background: rgba(14, 165, 233, 0.15);
+            color: #0284c7;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+    </style>
+</head>
+<body>
+    @include('partials.navbar')
+
+    <div class="container py-4">
+        {{-- Breadcrumb / Header --}}
+        <div class="mb-4">
+            <h1 class="page-title"><i class="bi bi-person-circle text-primary me-2"></i>Profil Pengguna</h1>
+            <p class="text-muted mb-0">Kelola identitas akun dan keamanan kata sandi Anda.</p>
+        </div>
+
+        {{-- Alerts --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('password_success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+                <i class="bi bi-shield-check me-2"></i>{{ session('password_success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('token_success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>{{ session('token_success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        {{-- User Header Card --}}
+        <div class="profile-header-card">
+            <div class="profile-avatar-lg">
+                {{ strtoupper(substr($user->name, 0, 1)) }}
+            </div>
+            <div class="flex-grow-1">
+                <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                    <h3 class="fw-bold mb-0 text-dark">{{ $user->name }}</h3>
+                    <span class="badge-role {{ $user->is_admin ? 'badge-admin' : 'badge-user' }}">
+                        <i class="bi {{ $user->is_admin ? 'bi-shield-fill' : 'bi-person-fill' }} me-1"></i>{{ $user->role ?? 'User' }}
+                    </span>
+                </div>
+                <div class="text-muted small d-flex flex-wrap align-items-center gap-3">
+                    <span><i class="bi bi-at me-1"></i>{{ $user->username }}</span>
+                    <span><i class="bi bi-envelope me-1"></i>{{ $user->email }}</span>
+                    <span>
+                        <i class="bi bi-telephone me-1 text-success"></i>
+                        <span class="fw-semibold text-dark">{{ $user->phone ?: 'No HP belum diatur' }}</span>
+                    </span>
+                    <span><i class="bi bi-calendar-check me-1"></i>Bergabung {{ $user->created_at ? $user->created_at->format('d M Y') : '-' }}</span>
+                    <span class="badge bg-light text-dark border px-2 py-1 rounded-3">
+                        <i class="bi bi-fingerprint text-primary me-1"></i>UUID: <code class="fw-bold text-primary">{{ $user->uuid }}</code>
+                        <button type="button" class="btn btn-sm btn-link p-0 ms-1 text-muted" onclick="copyText('{{ $user->uuid }}', this)" title="Salin UUID">
+                            <i class="bi bi-clipboard"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {{-- Edit Profile Form --}}
+            <div class="col-lg-6">
+                <div class="form-card">
+                    <div class="form-card-title">
+                        <i class="bi bi-person-lines-fill text-primary"></i> Perbarui Data Akun
+                    </div>
+
+                    <form action="{{ route('profile.update') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" value="{{ $user->username }}" readonly disabled>
+                            <small class="text-muted">Username digunakan untuk login dan tidak dapat diubah.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                            <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $user->name) }}" required>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Alamat Email <span class="text-danger">*</span></label>
+                            <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}" required>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="phone" class="form-label mb-0">Nomor WhatsApp / HP</label>
+                                @if(!empty($user->phone))
+                                    <button type="submit" form="unbindPhoneForm" class="btn btn-sm btn-link text-danger p-0 text-decoration-none fw-semibold small" onclick="return confirm('Apakah Anda yakin ingin memutuskan sambungan WhatsApp dari akun ini? Bot WA tidak lagi mengenali nomor ini sebagai member.')">
+                                        <i class="bi bi-x-circle me-1"></i> Putuskan Hubungan WhatsApp
+                                    </button>
+                                @endif
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0" style="border-radius: 12px 0 0 12px;"><i class="bi bi-telephone"></i></span>
+                                <input type="tel" name="phone" id="phone" class="form-control border-start-0 @error('phone') is-invalid @enderror" style="border-radius: 0 12px 12px 0;" placeholder="08xxxxxxxxxx" value="{{ old('phone', $user->phone ?? '') }}">
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-1 flex-wrap gap-1">
+                                <small class="text-muted">Nomor ini dipakai bot WhatsApp untuk memvalidasi akses member.</small>
+                                @if(!empty($user->phone))
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 rounded-pill small">
+                                        <i class="bi bi-whatsapp me-1"></i> Terhubung
+                                    </span>
+                                @endif
+                            </div>
+                            @error('phone')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <i class="bi bi-save"></i> Simpan Perubahan
+                        </button>
+                    </form>
+
+                    @if(!empty($user->phone))
+                        <form id="unbindPhoneForm" action="{{ route('profile.phone.unbind') }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Change Password Form --}}
+            <div class="col-lg-6">
+                <div class="form-card">
+                    <div class="form-card-title">
+                        <i class="bi bi-key-fill text-warning"></i> Ubah Kata Sandi
+                    </div>
+
+                    <form action="{{ route('profile.password.update') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label for="current_password" class="form-label">Password Saat Ini <span class="text-danger">*</span></label>
+                            <input type="password" name="current_password" id="current_password" class="form-control @error('current_password') is-invalid @enderror" required autocomplete="current-password">
+                            @error('current_password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password Baru <span class="text-danger">*</span></label>
+                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required minlength="6" autocomplete="new-password">
+                            <small class="text-muted">Minimal 6 karakter.</small>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password_confirmation" class="form-label">Konfirmasi Password Baru <span class="text-danger">*</span></label>
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required minlength="6" autocomplete="new-password">
+                        </div>
+
+                        <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <i class="bi bi-shield-lock"></i> Update Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Third-Party API Card --}}
+            <div class="col-12">
+                <div class="form-card">
+                    <div class="form-card-title d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-cpu text-info"></i>
+                            <span>Akses API & Integrasi Pihak Ketiga</span>
+                        </div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 py-2 px-3 rounded-pill fw-semibold small">
+                            <i class="bi bi-shield-check me-1"></i> Token API Fleksibel (Cooldown 7 Hari)
+                        </span>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            {{-- Short UUID Card --}}
+                            <div class="p-3 bg-light rounded-4 mb-3 border">
+                                <label class="form-label text-muted small mb-1">ID Pengguna (Short UUID)</label>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="fs-5 fw-bold font-monospace text-dark">{{ $user->uuid }}</span>
+                                    <button type="button" class="btn btn-sm btn-outline-primary rounded-3" onclick="copyText('{{ $user->uuid }}', this)">
+                                        <i class="bi bi-clipboard me-1"></i> Salin UUID
+                                    </button>
+                                </div>
+                                <small class="text-muted d-block mt-1">Identitas unik 8-karakter hex akun Anda.</small>
+                            </div>
+
+                            {{-- Masked Token with Copy Button --}}
+                            <div class="p-3 bg-light rounded-4 mb-3 border">
+                                <label class="form-label text-muted small mb-1">Token Akses API</label>
+                                <div class="input-group">
+                                    <input type="password" id="secretTokenInput" class="form-control font-monospace bg-white" value="{{ $decryptedToken ?? '' }}" readonly placeholder="••••••••••••••••••••••••••••••••" style="letter-spacing: 3px;">
+                                    <button class="btn btn-outline-primary px-3 fw-semibold" type="button" onclick="copySecretToken('secretTokenInput', this)" title="Salin Token">
+                                        <i class="bi bi-clipboard me-1"></i> Salin Token
+                                    </button>
+                                </div>
+                                <small class="text-muted d-block mt-1">Token disamarkan demi keamanan. Klik tombol <strong>Salin Token</strong> untuk menyalinnya.</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            {{-- Token Status & Configurable Expiration --}}
+                            <div class="p-3 bg-light rounded-4 mb-3 border">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <label class="form-label text-muted small mb-0">Status Token Saat Ini</label>
+                                        <div class="mt-1">
+                                            @if($thirdPartyToken)
+                                                @if($tokenExpired)
+                                                    <span class="badge bg-danger rounded-pill px-3 py-2">
+                                                        <i class="bi bi-exclamation-triangle-fill me-1"></i> Kedaluwarsa
+                                                    </span>
+                                                @else
+                                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                                        <i class="bi bi-check-circle-fill me-1"></i> Aktif (Sisa {{ $daysRemaining }} hari)
+                                                    </span>
+                                                @endif
+                                            @else
+                                                <span class="badge bg-secondary rounded-pill px-3 py-2">
+                                                    <i class="bi bi-dash-circle me-1"></i> Belum Dibuat
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @if($thirdPartyToken && $thirdPartyToken->expires_at)
+                                        <div class="text-end small text-muted">
+                                            <div>Kadaluwarsa:</div>
+                                            <strong>{{ $thirdPartyToken->expires_at->format('d M Y, H:i') }}</strong>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                @if($thirdPartyToken)
+                                    <div class="small text-muted mb-3">
+                                        <i class="bi bi-clock-history me-1"></i> Terakhir digunakan: 
+                                        <strong>{{ $thirdPartyToken->last_used_at ? $thirdPartyToken->last_used_at->diffForHumans() : 'Belum pernah' }}</strong>
+                                    </div>
+                                @endif
+
+                                {{-- Form Generate / Regenerate with Configurable Duration --}}
+                                <form action="{{ route('profile.token.regenerate') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="validity_days" class="form-label small text-muted mb-1">Pilih Masa Berlaku Token Baru:</label>
+                                        <select name="validity_days" id="validity_days" class="form-select form-select-sm rounded-3">
+                                            <option value="7">7 Hari (1 Minggu)</option>
+                                            <option value="14">14 Hari (2 Minggu)</option>
+                                            <option value="30" selected>30 Hari (1 Bulan - Standar)</option>
+                                            <option value="60">60 Hari (2 Bulan)</option>
+                                            <option value="90">90 Hari (3 Bulan)</option>
+                                            <option value="180">180 Hari (6 Bulan)</option>
+                                            <option value="365">365 Hari (1 Tahun)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="d-flex gap-2 flex-wrap align-items-center">
+                                        @if($thirdPartyToken && !$tokenExpired)
+                                            @if($canRegenerate)
+                                                <button type="submit" class="btn btn-primary rounded-3 px-3 py-2 fw-semibold" onclick="return confirm('Token lama akan dicabut dan diganti dengan token baru sesuai masa berlaku yang dipilih. Lanjutkan?')">
+                                                    <i class="bi bi-arrow-repeat me-1"></i> Regenerate Token
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-secondary rounded-3 px-3 py-2 fw-semibold" disabled>
+                                                    <i class="bi bi-hourglass-split me-1"></i> Regenerate Tersedia {{ $daysUntilRegenerate }} Hari Lagi
+                                                </button>
+                                            @endif
+                                        @else
+                                            <button type="submit" class="btn btn-primary rounded-3 px-3 py-2 fw-semibold">
+                                                <i class="bi bi-plus-circle me-1"></i> Generate Token Baru
+                                            </button>
+                                        @endif
+                                    </div>
+                                </form>
+
+                                @if($thirdPartyToken)
+                                    <div class="mt-2 pt-2 border-top">
+                                        <form action="{{ route('profile.token.revoke') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mencabut token pihak ketiga?')" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-link text-danger p-0 text-decoration-none">
+                                                <i class="bi bi-trash me-1"></i> Cabut Akses Token
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @include('partials.pwa-scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyText(text, btnElement) {
+            navigator.clipboard.writeText(text).then(function() {
+                const originalHtml = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="bi bi-check2 text-success"></i> Tersalin!';
+                setTimeout(function() {
+                    btnElement.innerHTML = originalHtml;
+                }, 2000);
+            }).catch(function(err) {
+                alert('Gagal menyalin: ' + err);
+            });
+        }
+
+        function copySecretToken(inputId, btnElement) {
+            const input = document.getElementById(inputId);
+            if (input && input.value && input.value.trim() !== '') {
+                navigator.clipboard.writeText(input.value).then(function() {
+                    const originalHtml = btnElement.innerHTML;
+                    btnElement.innerHTML = '<i class="bi bi-check2 text-success me-1"></i> Tersalin!';
+                    setTimeout(function() {
+                        btnElement.innerHTML = originalHtml;
+                    }, 2000);
+                }).catch(function(err) {
+                    alert('Gagal menyalin token: ' + err);
+                });
+            } else {
+                alert('Token belum dibuat atau sedang kedaluwarsa. Silakan generate token terlebih dahulu.');
+            }
+        }
+    </script>
+</body>
+</html>

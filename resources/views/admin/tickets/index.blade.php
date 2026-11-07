@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kelola Tiket Bantuan - {{ env('APP_NAME', 'Swaratani') }} Admin</title>
+    @include('partials.pwa-head')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    @include('partials.theme')
+
+    <style>
+        .page-title { color: #0f172a; font-weight: 800; }
+        .page-title i { color: #0e5f8a; }
+        .table-dark-custom { background: #f1f5f9 !important; }
+        .table-dark-custom th { color: #334155 !important; font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 2px solid #e2e8f0 !important; padding: 0.85rem 1rem; }
+        .table tbody td { color: #1e293b; border-bottom: 1px solid #f1f5f9; padding: 0.85rem 1rem; vertical-align: middle; background: #ffffff; }
+        .table tbody tr:hover td { background: #f8fafc; }
+        .glass-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); overflow: hidden; }
+        .badge-status { font-weight: 600; padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.75rem; }
+        .status-open { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .status-in_progress { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .status-resolved { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .status-closed { background: rgba(100, 116, 139, 0.15); color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    @include('partials.navbar')
+
+    <div class="container py-4">
+        @include('admin.partials.nav')
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div>
+                <h2 class="page-title mb-1">
+                    <i class="bi bi-inboxes-fill me-2 text-primary"></i>Kelola Tiket Bantuan & Dukungan
+                </h2>
+                <p class="text-muted mb-0 small">Daftar pertanyaan, keluhan, dan permohonan bantuan teknis dari pengguna.</p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead class="table-dark-custom">
+                        <tr>
+                            <th>ID</th>
+                            <th>Tanggal</th>
+                            <th>Pelapor</th>
+                            <th>Subjek</th>
+                            <th>Kategori</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($tickets as $ticket)
+                            <tr>
+                                <td>#TKT-{{ str_pad($ticket->id, 4, '0', STR_PAD_LEFT) }}</td>
+                                <td>{{ $ticket->created_at->format('d/m/Y H:i') }}</td>
+                                <td>{{ $ticket->user->name ?? 'Guest' }}</td>
+                                <td>{{ $ticket->subject }}</td>
+                                <td><span class="badge bg-secondary">{{ $ticket->category }}</span></td>
+                                <td><span class="badge-status status-{{ $ticket->status }}">{{ strtoupper(str_replace('_', ' ', $ticket->status)) }}</span></td>
+                                <td>
+                                    <a href="{{ route('admin.tickets.show', $ticket->id) }}" class="btn btn-sm btn-primary" style="border-radius:8px;">Buka</a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-5">Belum ada tiket masuk.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if($tickets->hasPages())
+                <div class="d-flex justify-content-center mt-3 pb-3">
+                    {{ $tickets->links('pagination::bootstrap-5') }}
+                </div>
+            @endif
+        </div>
+    </div>
+</body>
+</html>
