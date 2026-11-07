@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <title>Kebijakan Privasi - {{ env('APP_NAME', 'Swaratani') }}</title>
+    <title>Kebijakan Privasi - {{ config('app.name', 'Tanikaya') }}</title>
 
     @include('partials.theme')
 
@@ -190,7 +190,7 @@
                 <h1>Kebijakan Privasi</h1>
                 <p><strong>Terakhir diperbarui: 14 Februari 2026</strong></p>
 
-                <p>Aplikasi <strong>{{ env('APP_NAME', 'Swaratani') }}</strong> ("Aplikasi") dikembangkan sebagai layanan Gratis. Layanan ini
+                <p>Aplikasi <strong>{{ config('app.name', 'Tanikaya') }}</strong> ("Aplikasi") dikembangkan sebagai layanan Gratis. Layanan ini
                     disediakan tanpa biaya dan dimaksudkan untuk digunakan apa adanya.</p>
 
                 <p>Halaman ini digunakan untuk menginformasikan pengunjung mengenai kebijakan kami terkait pengumpulan,

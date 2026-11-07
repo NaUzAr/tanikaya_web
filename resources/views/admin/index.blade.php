@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Manage Devices - {{ env('APP_NAME', 'Swaratani') }}</title>
+    <title>Manage Devices - {{ config('app.name', 'Tanikaya') }}</title>
     @include('partials.pwa-head')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
@@ -676,7 +676,7 @@
                             <div class="qris-logo-row">
                                 <img src="{{ asset(config('app.logo', 'images/logo.png')) }}" alt="Logo" class="qris-header-logo">
                                 <div class="qris-header-text">
-                                    <div class="qris-brand">{{ strtoupper(env('APP_NAME', 'Swaratani')) }}</div>
+                                    <div class="qris-brand">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
                                     <div class="qris-sub">Smart Agriculture</div>
                                 </div>
                             </div>
@@ -925,7 +925,7 @@
             }).then(function(canvas) {
                 const link = document.createElement('a');
                 const safeName = currentDeviceName.replace(/[^a-zA-Z0-9]/g, '_');
-                link.download = 'QR_{{ preg_replace('/[^a-zA-Z0-9]/', '_', env('APP_NAME', 'Swaratani')) }}_' + safeName + '.png';
+                link.download = 'QR_{{ preg_replace('/[^a-zA-Z0-9]/', '_', config('app.name', 'Tanikaya')) }}_' + safeName + '.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });

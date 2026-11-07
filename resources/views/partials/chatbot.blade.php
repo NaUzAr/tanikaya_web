@@ -1,7 +1,7 @@
-{{-- Chatbot Widget - Swaratani IoT --}}
+{{-- Chatbot Widget - {{ config('app.name', 'Tanikaya') }} --}}
 <div id="chatbot-widget">
     {{-- Floating Bubble Button --}}
-    <button id="chatbot-bubble" title="Chat dengan Swaratani Bot" aria-label="Buka Chatbot">
+    <button id="chatbot-bubble" title="Chat dengan {{ config('app.name', 'Tanikaya') }} Bot" aria-label="Buka Chatbot">
         <i class="bi bi-chat-dots-fill" id="bubble-icon-chat"></i>
         <i class="bi bi-x-lg d-none" id="bubble-icon-close"></i>
         <span class="bubble-badge" id="bubble-badge">1</span>
@@ -16,7 +16,7 @@
                     <i class="bi bi-robot"></i>
                 </div>
                 <div>
-                    <div class="chatbot-name">Swaratani Bot</div>
+                    <div class="chatbot-name">{{ config('app.name', 'Tanikaya') }} Bot</div>
                     <div class="chatbot-status"><span class="status-dot"></span> Online</div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             <div class="msg bot">
                 <div class="msg-avatar"><i class="bi bi-robot"></i></div>
                 <div class="msg-bubble">
-                    Halo! 👋 Saya <strong>Swaratani Bot</strong>.<br>
+                    Halo! 👋 Saya <strong>{{ config('app.name', 'Tanikaya') }} Bot</strong>.<br>
                     Ada yang bisa saya bantu tentang sistem IoT?
                 </div>
             </div>

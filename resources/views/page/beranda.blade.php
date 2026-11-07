@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0e5f8a">
-    <meta name="description" content="{{ env('APP_NAME', 'Swaratani') }} - Sistem monitoring pertanian cerdas berbasis">
+    <meta name="description" content="{{ config('app.name', 'Tanikaya') }} - {{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="{{ env('APP_NAME', 'Swaratani') }}">
+    <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Tanikaya') }}">
     <link rel="icon" href="{{ asset(config('app.logo', 'images/logo.png')) }}">
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="{{ asset(config('app.logo', 'images/logo.png')) }}">
@@ -18,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <title>{{ env('APP_NAME', 'Swaratani') }} - Dashboard</title>
+    <title>{{ config('app.name', 'Tanikaya') }} - {{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}</title>
 
     @include('partials.theme')
 
@@ -703,7 +703,7 @@
             <div class="container">
                 <div class="section-header fade-up">
                     <h2>Fitur Utama</h2>
-                    <p>Akses cepat ke semua fitur {{ env('APP_NAME', 'Swaratani') }}</p>
+                    <p>Akses cepat ke semua fitur {{ config('app.name', 'Tanikaya') }}</p>
                 </div>
                 <div class="features-grid">
                     <a href="{{ route('monitoring.index') }}" class="feature-card fade-up">
@@ -754,13 +754,13 @@
             <div class="container hero-content">
                 <div class="hero-badge fade-up">
                     <span class="dot"></span>
-                    #SmartFarming
+                    {{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}
                 </div>
                 <h1 class="hero-title fade-up">
-                    Monitoring Pertanian<br><span class="highlight">Cerdas Berbasis</span>
+                    Monitoring Pertanian<br><span class="highlight">Cerdas & Modern</span>
                 </h1>
                 <p class="hero-subtitle fade-up">
-                    {{ env('APP_NAME', 'Swaratani') }} menghadirkan solusi monitoring dan automasi pertanian terintegrasi untuk mendorong produktivitas dan efisiensi budidaya tanaman Anda.
+                    {{ config('app.name', 'Tanikaya') }} menghadirkan inovasi modern untuk mendukung efisiensi alat dan mesin pertanian serta produktivitas budidaya Anda.
                 </p>
                 <div class="hero-actions fade-up">
                     <a href="{{ route('login') }}" class="btn-hero-primary">
@@ -798,7 +798,7 @@
 
     <!-- ===== FOOTER ===== -->
     <footer class="page-footer">
-        <p>&copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ env('APP_NAME', 'Swaratani') }}</a> &bull; Tim Engineering Pertanian</p>
+        <p>&copy; {{ date('Y') }} <a href="{{ route('home') }}">{{ config('app.name', 'Tanikaya') }}</a> &bull; {{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}</p>
     </footer>
 
     @include('partials.chatbot')

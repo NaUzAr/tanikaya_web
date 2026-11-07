@@ -40,12 +40,22 @@
     .navbar-main .navbar-brand:hover span.tanikaya-brand-text {
         color: #ca8a04;
     }
+    .navbar-main .navbar-brand.navbar-brand-logo-only {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .navbar-main .navbar-brand.navbar-brand-logo-only:hover {
+        transform: scale(1.05);
+    }
     .navbar-main .navbar-brand.navbar-brand-logo-only img {
-        height: 40px;
-        border-radius: 6px;
+        height: 42px;
+        width: auto;
+        object-fit: contain;
     }
     .navbar-main .navbar-brand img {
-        height: 36px;
+        height: 38px;
         width: auto;
     }
 
@@ -346,13 +356,8 @@
 
 <nav class="navbar-main">
     <div class="container d-flex align-items-center justify-content-between flex-nowrap">
-        <a class="navbar-brand {{ config('app.theme') === 'tani' ? 'navbar-brand-text-only' : '' }}" href="{{ $isPwa ? route('monitoring.index') : route('home') }}">
-            @if(config('app.theme') !== 'tani')
-                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}" alt="{{ config('app.name', 'Swaratani') }}">
-                <span>{{ config('app.name', 'Swaratani') }}</span>
-            @else
-                <span class="tanikaya-brand-text">{{ strtoupper(config('app.name', 'TANIKAYA')) }}</span>
-            @endif
+        <a class="navbar-brand navbar-brand-logo-only" href="{{ $isPwa ? route('monitoring.index') : route('home') }}" title="{{ config('app.name', 'Tanikaya') }} - {{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}">
+            <img src="{{ asset(config('app.logo', 'images/logo.png')) }}" alt="{{ config('app.name', 'Tanikaya') }}">
         </a>
 
         <div class="nav-links-wrap ms-auto">

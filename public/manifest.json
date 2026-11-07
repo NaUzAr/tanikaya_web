@@ -1,7 +1,7 @@
 {
-    "name": "Swaratani IoT",
-    "short_name": "Swaratani",
-    "description": "Sistem monitoring pertanian cerdas berbasis IoT - Pantau kondisi lahan, cuaca, dan sensor tanaman secara real-time",
+    "name": "Tanikaya - Best Solution for Agriculture Machinery",
+    "short_name": "Tanikaya",
+    "description": "Tanikaya - Best Solution for Agriculture Machinery",
     "start_url": "/?pwa=1",
     "scope": "/",
     "id": "/",

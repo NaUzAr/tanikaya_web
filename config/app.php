@@ -13,9 +13,10 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Tanikaya'),
     'theme' => env('APP_THEME', 'maheswara'),
     'logo' => env('APP_LOGO', 'images/logo.png'),
+    'tagline' => env('APP_TAGLINE', 'Best Solution for Agriculture Machinery'),
 
     /*
     |--------------------------------------------------------------------------

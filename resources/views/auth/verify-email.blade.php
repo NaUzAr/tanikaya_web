@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Verifikasi Email - {{ env('APP_NAME', 'Swaratani') }}</title>
+    <title>Verifikasi Email - {{ config('app.name', 'Tanikaya') }}</title>
     @include('partials.pwa-head')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -74,39 +74,55 @@
 
         /* ===== BRAND HEADER ===== */
         .brand-logo-box {
-            width: 80px;
-            height: 80px;
-            padding: 14px;
-            background: #E0F2FE;
-            border-radius: 22px;
-            border: 1px solid rgba(186, 230, 253, 0.5);
+            width: 88px;
+            height: 88px;
+            padding: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #fefce8 100%);
+            border-radius: 24px;
+            border: 1.5px solid rgba(234, 179, 8, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 14px;
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.12);
+            margin: 0 auto 12px;
+            box-shadow: 0 10px 25px rgba(234, 179, 8, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .brand-logo-box:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 14px 30px rgba(234, 179, 8, 0.22);
+            border-color: rgba(234, 179, 8, 0.55);
         }
 
         .brand-logo-box img {
-            height: 100%;
-            width: auto;
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
         }
 
-        .brand-name {
-            font-size: 28px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #0E5F8A, #0EA5E9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
+        .brand-tagline-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(202, 138, 4, 0.15) 100%);
+            border: 1px solid rgba(202, 138, 4, 0.28);
+            border-radius: 9999px;
+            color: #78350f;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            box-shadow: 0 2px 8px rgba(202, 138, 4, 0.08);
         }
 
-        .brand-subtitle {
-            font-size: 12px;
-            font-weight: 600;
-            color: #94A3B8;
-            letter-spacing: 0.5px;
+        .brand-tagline-badge .tagline-icon {
+            color: #d97706;
+            font-size: 13px;
+        }
+
+        .brand-tagline-badge .tagline-highlight {
+            color: #92400e;
+            font-weight: 800;
         }
 
         /* ===== WELCOME / VERIFY TEXT ===== */
@@ -318,19 +334,15 @@
     <div class="glow-blob glow-blob-3"></div>
 
     <div class="auth-card">
-        <!-- Brand Header -->
-        <div class="text-center mb-3">
-            @if(config('app.theme') !== 'tani')
-                <div class="brand-logo-box">
-                    <img src="{{ asset(config('app.logo', 'images/logo.png')) }}" alt="{{ config('app.name', 'Swaratani') }}">
-                </div>
-                <div class="brand-name">{{ config('app.name', 'Swaratani') }}</div>
-            @else
-                <div class="tanikaya-brand-heading">
-                    {{ strtoupper(config('app.name', 'TANIKAYA')) }}
-                </div>
-            @endif
-            <div class="brand-subtitle">Smart IoT Farming Platform</div>
+        <!-- Brand Header (Only Logo + Attractive Tagline) -->
+        <div class="text-center mb-4">
+            <div class="brand-logo-box">
+                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}" alt="{{ config('app.name', 'Tanikaya') }}">
+            </div>
+            <div class="brand-tagline-badge">
+                <i class="bi bi-gear-wide-connected tagline-icon"></i>
+                <span>Best Solution for <span class="tagline-highlight">Agriculture Machinery</span></span>
+            </div>
         </div>
 
         <!-- Welcome Text -->
