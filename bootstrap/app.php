@@ -29,5 +29,12 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e, \Illuminate\Http\Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Terlalu banyak permintaan. Mohon tunggu beberapa saat.',
+                ], 429);
+            }
+            return back()->with('warning', 'Terlalu banyak permintaan. Mohon tunggu sebentar sebelum mencoba kembali.');
+        });
     })->create();

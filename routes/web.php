@@ -184,17 +184,17 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
 
 // Kirim ulang email verifikasi
 Route::post('/email/resend', function (Request $request) {
-    // Cari user berdasarkan email di session
-    $email = $request->session()->get('pending_verification_email');
+    // Cari user berdasarkan email di session atau auth user
+    $email = $request->session()->get('pending_verification_email') ?? (auth()->check() ? auth()->user()->email : null);
     if ($email) {
         $user = \App\Models\User::where('email', $email)->first();
         if ($user && !$user->hasVerifiedEmail()) {
             $user->sendEmailVerificationNotification();
-            return back()->with('status', 'Link verifikasi telah dikirim ulang!');
+            return back()->with('status', 'Link verifikasi telah dikirim ulang ke email Anda!');
         }
     }
-    return back()->withErrors(['email' => 'Tidak dapat mengirim ulang. Silakan register ulang.']);
-})->middleware('throttle:1,1')->name('verification.resend');
+    return back()->withErrors(['email' => 'Tidak dapat mengirim ulang. Silakan register ulang atau login.']);
+})->middleware('throttle:3,1')->name('verification.resend');
 
 // Beranda (public)
 Route::get('/', function () {
