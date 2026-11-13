@@ -26,177 +26,201 @@
             border-bottom: 1px solid var(--glass-border);
         }
 
-        .navbar-brand {
-            font-weight: 700;
-            color: var(--primary) !important;
-        }
-
-        .nav-link {
-            color: var(--text-secondary) !important;
-        }
-
-        .nav-link:hover {
-            color: var(--primary) !important;
-        }
-
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
         }
 
         .card-header-gradient {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+            border-bottom: 3.5px solid #facc15;
             border-radius: 24px 24px 0 0 !important;
             padding: 1.5rem 2rem;
         }
 
         .form-control,
         .form-select {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
             border-radius: 12px;
             padding: 0.75rem 1rem;
         }
 
         .form-control:focus,
         .form-select:focus {
-            background: var(--glass-bg);
-            border-color: var(--primary);
-            color: var(--text-main);
-            box-shadow: 0 0 0 3px rgba(var(--primary), 0.2);
+            background: #ffffff;
+            border-color: #eab308;
+            color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
         }
 
         .form-control::placeholder {
-            color: var(--text-secondary);
+            color: #94a3b8;
         }
 
         .form-select option {
             background: #ffffff;
-            color: #333;
+            color: #0f172a;
         }
 
         .form-label {
-            color: var(--primary);
-            font-weight: 600;
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .form-label i {
+            color: #ca8a04;
         }
 
         .form-text {
-            color: var(--text-secondary);
+            color: #64748b;
         }
 
         .type-card {
             cursor: pointer;
-            background: var(--glass-bg);
-            border: 2px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 1.75rem 1.25rem;
             text-align: center;
-            transition: all 0.3s ease;
-            color: var(--text-main);
+            transition: all 0.25s ease;
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
-        .type-card:hover,
+        .type-card:hover {
+            border-color: #facc15;
+            background: #fefce8;
+            transform: translateY(-3px);
+        }
+
         .type-card.selected {
-            border-color: var(--primary);
-            background: rgba(var(--primary), 0.1);
-            transform: translateY(-5px);
+            border-color: #eab308;
+            background: #fef9c3;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(234, 179, 8, 0.2);
         }
 
         .type-card i {
             font-size: 2.5rem;
-            color: var(--primary);
+            color: #ca8a04;
+            transition: transform 0.2s ease;
+        }
+
+        .type-card.selected i {
+            transform: scale(1.1);
         }
 
         .type-card h6 {
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
             margin-bottom: 0;
-            color: var(--text-main);
+            font-weight: 700;
+            color: #0f172a;
         }
 
-        .sensor-row {
-            background: var(--glass-bg);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            border: 1px solid var(--glass-border);
+        .sensor-row,
+        .output-row {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1.15rem;
+            margin-bottom: 0.85rem;
+            border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
         }
 
-        .sensor-row:hover {
-            background: var(--glass-bg);
-            border-color: var(--primary);
+        .sensor-row:hover,
+        .output-row:hover {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
         }
 
         .btn-gradient {
-            background: var(--primary-gradient);
-            border: none;
-            color: #fff;
-            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+            border: 1px solid #eab308;
+            color: #000000 !important;
+            padding: 0.75rem 1.75rem;
             border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(234, 179, 8, 0.35);
         }
 
-        .btn-gradient:hover {
+        .btn-gradient:hover:not(:disabled) {
+            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            color: #fff;
+            box-shadow: 0 8px 22px rgba(234, 179, 8, 0.45);
+            color: #000000 !important;
+        }
+
+        .btn-gradient:disabled {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            color: #94a3b8 !important;
+            box-shadow: none;
+            cursor: not-allowed;
         }
 
         .btn-glass {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #475569;
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
+            transition: all 0.2s ease;
         }
 
         .btn-glass:hover {
-            background: var(--glass-bg);
-            border-color: var(--primary);
-            color: var(--primary);
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #94a3b8;
         }
 
         .btn-outline-add {
-            background: transparent;
-            border: 2px dashed var(--primary);
-            color: var(--primary);
+            background: #ffffff;
+            border: 2px dashed #ca8a04;
+            color: #854d0e;
             border-radius: 12px;
             padding: 0.75rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            transition: all 0.25s ease;
         }
 
         .btn-outline-add:hover {
-            background: rgba(14, 95, 138, 0.1);
-            color: var(--primary-dark);
+            background: #fefce8;
+            color: #713f12;
             border-style: solid;
+            border-color: #eab308;
         }
 
         .alert-info-custom {
-            background: rgba(14, 165, 233, 0.05);
-            border: 1px solid rgba(14, 165, 233, 0.2);
-            color: var(--text-main);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #334155;
             border-radius: 12px;
         }
 
         .alert-warning-custom {
-            background: rgba(250, 204, 21, 0.05);
-            border: 1px solid rgba(250, 204, 21, 0.2);
-            color: var(--text-main);
+            background: #fefce8;
+            border: 1px solid #fef08a;
+            color: #854d0e;
             border-radius: 12px;
         }
 
         .badge-count {
-            background: var(--secondary-gradient);
-            color: var(--primary-dark);
+            background: #fef08a;
+            color: #854d0e;
             font-weight: 700;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
+            font-size: 0.75rem;
+            border: 1px solid #fde047;
         }
 
         /* ========= Mobile Responsive ========= */
@@ -270,12 +294,15 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="glass-card shadow-lg">
-                    <div class="card-header-gradient d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0 text-white">
-                            <i class="bi bi-plus-circle-fill me-2"></i>Tambah Device Baru
-                        </h4>
-                        <a href="{{ route('admin.devices.index') }}" class="btn btn-sm btn-outline-light">
-                            <i class="bi bi-arrow-left me-1"></i> Kembali ke Devices
+                    <div class="card-header-gradient d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(250, 204, 21, 0.15); color: #facc15; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                                <i class="bi bi-cpu-fill"></i>
+                            </div>
+                            <h4 class="mb-0 text-white fw-bold">Tambah Perangkat IoT Baru</h4>
+                        </div>
+                        <a href="{{ route('admin.devices.index') }}" class="btn btn-sm btn-outline-warning text-warning fw-semibold px-3" style="border-radius: 50px;">
+                            <i class="bi bi-arrow-left me-1"></i> Kembali ke Perangkat
                         </a>
                     </div>
                     <div class="card-body p-4">
@@ -327,7 +354,7 @@
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <label class="form-label mb-0"><i class="bi bi-geo-alt me-1"></i> Lokasi Alat</label>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" id="btnAutoDetect" style="border-radius: 12px;">
+                                    <button type="button" class="btn btn-sm" id="btnAutoDetect" style="border-radius: 10px; background: #fef9c3; border: 1px solid #fde047; color: #854d0e; font-weight: 600;">
                                         <i class="bi bi-crosshair me-1"></i> Auto Lokasi
                                     </button>
                                 </div>
@@ -390,10 +417,10 @@
                                         menambahkan):</label>
                                     <div class="d-flex flex-wrap gap-2">
                                         @foreach($availableSensors as $key => $sensor)
-                                            <button type="button" class="btn btn-sm btn-outline-secondary bg-opacity-10"
+                                            <button type="button" class="btn btn-sm"
                                                 onclick="addSensorRow('{{ $key }}')"
-                                                style="border-color: var(--glass-border); background: var(--glass-bg); color: var(--text-main);">
-                                                <i class="bi {{ $sensor['icon'] }} me-1"></i> {{ $sensor['label'] }}
+                                                style="border: 1px solid #e2e8f0; background: #f8fafc; color: #1e293b; border-radius: 8px; font-weight: 500;">
+                                                <i class="bi {{ $sensor['icon'] }} me-1 text-warning"></i> {{ $sensor['label'] }}
                                             </button>
                                         @endforeach
                                     </div>
@@ -436,10 +463,10 @@
                                         menambahkan):</label>
                                     <div class="d-flex flex-wrap gap-2">
                                         @foreach($availableOutputs as $key => $output)
-                                            <button type="button" class="btn btn-sm btn-outline-secondary bg-opacity-10"
+                                            <button type="button" class="btn btn-sm"
                                                 onclick="addOutputRow('{{ $key }}')"
-                                                style="border-color: var(--glass-border); background: var(--glass-bg); color: var(--text-main);">
-                                                <i class="bi {{ $output['icon'] }} me-1"></i> {{ $output['label'] }}
+                                                style="border: 1px solid #e2e8f0; background: #f8fafc; color: #1e293b; border-radius: 8px; font-weight: 500;">
+                                                <i class="bi {{ $output['icon'] }} me-1 text-warning"></i> {{ $output['label'] }}
                                             </button>
                                         @endforeach
                                     </div>

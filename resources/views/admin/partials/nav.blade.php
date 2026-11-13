@@ -54,21 +54,21 @@
     }
 
     .admin-nav-tab:hover {
-        color: #0e5f8a;
-        background: #f8fafc;
-        border-color: #e2e8f0;
+        color: #ca8a04;
+        background: #fefce8;
+        border-color: #fef08a;
         transform: translateY(-1px);
     }
 
     .admin-nav-tab.active {
-        background: linear-gradient(135deg, #0e5f8a 0%, #0284c7 100%);
-        color: #ffffff !important;
-        box-shadow: 0 4px 14px rgba(14, 95, 138, 0.28);
-        border-color: transparent;
+        background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+        color: #facc15 !important;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+        border: 1px solid rgba(250, 204, 21, 0.35);
     }
 
     .admin-nav-tab.active i {
-        color: #ffffff;
+        color: #facc15;
     }
 
     .admin-nav-badge {
@@ -84,8 +84,8 @@
     }
 
     .admin-nav-tab.active .admin-nav-badge-warn {
-        background: rgba(255, 255, 255, 0.25);
-        color: #ffffff;
+        background: rgba(250, 204, 21, 0.25);
+        color: #fde047;
     }
 
     /* =========================================================
@@ -116,7 +116,7 @@
     .admin-nav-tab-m i {
         font-size: 1rem;
         flex-shrink: 0;
-        color: #0e5f8a;
+        color: #ca8a04;
     }
 
     .admin-nav-tab-m span {
@@ -127,20 +127,20 @@
 
     .admin-nav-tab-m:hover,
     .admin-nav-tab-m:active {
-        background: #f8fafc;
-        color: #0e5f8a;
-        border-color: #cbd5e1;
+        background: #fefce8;
+        color: #ca8a04;
+        border-color: #fef08a;
     }
 
     .admin-nav-tab-m.active {
-        background: linear-gradient(135deg, #0e5f8a 0%, #0284c7 100%);
-        color: #ffffff !important;
-        border-color: transparent;
-        box-shadow: 0 3px 10px rgba(14, 95, 138, 0.25);
+        background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+        color: #facc15 !important;
+        border-color: rgba(250, 204, 21, 0.35);
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
     }
 
     .admin-nav-tab-m.active i {
-        color: #ffffff !important;
+        color: #facc15 !important;
     }
 
     .admin-nav-tab-m .badge-count {
@@ -154,8 +154,8 @@
     }
 
     .admin-nav-tab-m.active .badge-count {
-        background: rgba(255, 255, 255, 0.25);
-        color: #ffffff;
+        background: rgba(250, 204, 21, 0.25);
+        color: #fde047;
     }
 </style>
 
