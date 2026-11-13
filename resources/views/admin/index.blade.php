@@ -674,10 +674,10 @@
                         <!-- Header gradient band -->
                         <div class="qris-header">
                             <div class="qris-logo-row">
-                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}" alt="Logo" class="qris-header-logo">
+                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=4" alt="Logo" class="qris-header-logo">
                                 <div class="qris-header-text">
                                     <div class="qris-brand">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
-                                    <div class="qris-sub">Smart Agriculture</div>
+                                    <div class="qris-sub">{{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}</div>
                                 </div>
                             </div>
                         </div>
@@ -795,7 +795,7 @@
         let currentDeviceName = '';
         const logoImg = new Image();
         logoImg.crossOrigin = 'anonymous';
-        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}';
+        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=4';
 
         function showQrModal(token, deviceName) {
             currentDeviceName = deviceName;
@@ -878,16 +878,16 @@
         }
 
         function drawLogoOnCanvas(ctx, size) {
-            const logoSize = size * 0.22;
+            const logoSize = size * 0.25;
             const cx = size / 2;
             const cy = size / 2;
-            const padding = 8;
+            const padding = 5;
             const totalSize = logoSize + padding * 2;
 
             // White circle background
             ctx.fillStyle = '#ffffff';
             ctx.beginPath();
-            ctx.arc(cx, cy, totalSize / 2 + 4, 0, Math.PI * 2);
+            ctx.arc(cx, cy, totalSize / 2 + 2, 0, Math.PI * 2);
             ctx.fill();
 
             // Border ring using theme primary color
@@ -895,7 +895,7 @@
             ctx.strokeStyle = primaryColor;
             ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.arc(cx, cy, totalSize / 2 + 4, 0, Math.PI * 2);
+            ctx.arc(cx, cy, totalSize / 2 + 2, 0, Math.PI * 2);
             ctx.stroke();
 
             // Calculate aspect ratio so image doesn't stretch or distort
