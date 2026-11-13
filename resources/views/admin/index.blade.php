@@ -184,16 +184,16 @@
 
         .qris-header {
             background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
-            padding: 1.15rem 1rem;
+            padding: 1.15rem 1.25rem 1rem;
             position: relative;
             border-bottom: 3.5px solid #facc15;
-            text-align: center;
+            text-align: left;
         }
 
         .qris-logo-row {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 12px;
         }
 
@@ -209,13 +209,36 @@
             flex-shrink: 0;
         }
 
+        .qris-header-text {
+            text-align: left;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
         .qris-brand-title {
-            font-size: 1.45rem;
+            font-size: 1.25rem;
             font-weight: 900;
-            letter-spacing: 2.5px;
-            line-height: 1;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
             color: #facc15;
             text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .qris-sub {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+        }
+
+        .qris-sub-highlight {
+            color: #facc15;
+            font-weight: 700;
         }
 
         .qris-device-section {
@@ -745,8 +768,13 @@
                         <!-- Header gradient band -->
                         <div class="qris-header">
                             <div class="qris-logo-row">
-                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=6" alt="Tanikaya" class="qris-header-logo">
-                                <span class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</span>
+                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=7" alt="Tanikaya" class="qris-header-logo">
+                                <div class="qris-header-text">
+                                    <div class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
+                                    <div class="qris-sub">
+                                        Best Solution for <span class="qris-sub-highlight">Agriculture Machinery</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -875,7 +903,7 @@
         let currentDeviceName = '';
         const logoImg = new Image();
         logoImg.crossOrigin = 'anonymous';
-        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=6';
+        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=7';
 
         function showQrModal(token, deviceName) {
             currentDeviceName = deviceName;
