@@ -301,48 +301,59 @@
 
     @media (max-width: 576px) {
         .navbar-main {
-            padding: 0.45rem 0;
+            padding: 0.4rem 0;
+            overflow: hidden;
+        }
+        .navbar-main .container {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
         }
         .navbar-main .navbar-brand {
             gap: 0;
             flex-shrink: 0;
+            max-width: 105px;
         }
         .navbar-main .navbar-brand span {
             display: none;
         }
         .navbar-main .navbar-brand span.tanikaya-brand-text {
             display: inline-block !important;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             letter-spacing: -0.8px;
         }
+        .navbar-main .navbar-brand.navbar-brand-logo-only img,
         .navbar-main .navbar-brand img {
-            height: 32px;
+            height: auto;
+            max-height: 22px;
+            max-width: 95px;
+            width: auto;
+            object-fit: contain;
         }
         .nav-links-wrap a span.nav-text {
             display: none;
         }
         .nav-links-wrap {
-            gap: 0.1rem;
+            gap: 0.05rem;
             flex-shrink: 1;
         }
         .nav-links-wrap a {
-            padding: 0.32rem 0.42rem;
-            font-size: 1.05rem;
+            padding: 0.28rem 0.32rem;
+            font-size: 0.95rem;
         }
         .nav-user-dropdown {
-            margin-left: 0.2rem;
+            margin-left: 0.1rem;
         }
         .nav-user-name {
             display: none;
         }
         .nav-user-btn {
-            padding: 0.2rem;
+            padding: 0.15rem;
             border-radius: 50%;
         }
         .nav-user-avatar, .nav-user-avatar-wrap {
-            width: 28px;
-            height: 28px;
-            font-size: 0.75rem;
+            width: 26px;
+            height: 26px;
+            font-size: 0.72rem;
         }
         .nav-user-chevron {
             display: none;

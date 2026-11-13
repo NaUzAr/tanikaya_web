@@ -453,6 +453,8 @@
                 padding-left: 0.75rem !important;
                 padding-right: 0.75rem !important;
                 padding-bottom: 3.5rem !important;
+                max-width: 100vw;
+                overflow-x: hidden;
             }
 
             .page-title {
@@ -471,10 +473,26 @@
                 box-shadow: none !important;
                 padding: 0 !important;
                 border-radius: 0 !important;
+                overflow: hidden !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
 
             .table-responsive {
-                overflow: visible !important;
+                overflow: hidden !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .table {
+                display: block;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .table tbody {
+                display: block;
+                width: 100% !important;
             }
 
             /* Table → Card Layout */
@@ -484,6 +502,9 @@
 
             .table tbody tr {
                 display: block;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box;
                 background: #ffffff;
                 border: 1px solid #e2e8f0;
                 border-radius: 16px;
@@ -500,6 +521,8 @@
                 border: none;
                 border-bottom: 1px dashed #f1f5f9;
                 font-size: 0.85rem;
+                overflow: hidden;
+                word-break: break-word;
             }
 
             .table tbody td::before {
@@ -520,6 +543,14 @@
                 padding-top: 0 !important;
                 padding-bottom: 0.75rem !important;
                 border-bottom: 1px solid #e2e8f0 !important;
+            }
+
+            .table tbody td[data-label="Device"] a {
+                display: block;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-break: break-all;
             }
 
             .table tbody td[data-label="Device"]::before {
@@ -548,6 +579,20 @@
                 width: 38px;
                 height: 38px;
             }
+
+            .admin-search-wrap {
+                width: 100% !important;
+                flex-direction: column !important;
+            }
+            .admin-search-wrap form,
+            .admin-search-wrap .input-group {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+            .admin-search-wrap .btn-gradient {
+                width: 100% !important;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 400px) {
@@ -575,7 +620,7 @@
                 </h2>
                 <p class="text-muted mb-0 small">Kelola seluruh perangkat IoT, tipe mesin, sensor, dan kredensial MQTT.</p>
             </div>
-            <div class="d-flex flex-wrap gap-2 align-items-center">
+            <div class="d-flex flex-wrap gap-2 align-items-center admin-search-wrap">
                 <!-- Search Form -->
                 <form action="{{ route('admin.devices.index') }}" method="GET" class="d-flex mb-0">
                     <div class="input-group shadow-sm" style="max-width: 260px; background: #ffffff; border-radius: 10px; overflow: hidden; border: 1px solid #cbd5e1;">
@@ -772,7 +817,7 @@
 
     <!-- QR Code Modal - Modern IoT Pass Style -->
     <div class="modal fade qr-modal" id="qrModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: min(380px, calc(100vw - 24px)); margin: 12px auto;">
             <div class="modal-content">
                 <div class="modal-body p-0">
                     <!-- Close button -->
@@ -840,7 +885,7 @@
 
     <!-- Clear Data Modal -->
     <div class="modal fade" id="clearDataModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 460px;">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: min(460px, calc(100vw - 24px)); margin: 12px auto;">
             <div class="modal-content" style="background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
                 <form id="clearDataForm" method="POST" action="">
                     @csrf
