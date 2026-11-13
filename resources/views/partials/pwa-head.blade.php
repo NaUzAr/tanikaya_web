@@ -5,8 +5,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Tanikaya') }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}?v=3">
-<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=3">
-<link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=3">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png') }}?v=3">
-<link rel="manifest" href="/manifest.json?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}?v=5">
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=5">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=5">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png') }}?v=5">
+<link rel="manifest" href="/manifest.json?v=5">

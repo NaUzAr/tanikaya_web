@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#facc15">
     <meta name="description" content="Kebijakan Privasi {{ config('app.name', 'Tanikaya') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}?v=3">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=3">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=3">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png') }}?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}?v=5">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=5">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=5">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png') }}?v=5">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">

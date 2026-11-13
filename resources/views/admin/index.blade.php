@@ -163,11 +163,11 @@
 
         /* QR Modal & QRIS Card */
         .qr-modal .modal-content {
-            background: var(--glass-bg, #fff);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border, #e2e8f0);
-            border-radius: 24px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 28px;
             overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
         }
 
         .qris-card {
@@ -175,23 +175,24 @@
             width: 100%;
             max-width: 340px;
             margin: 0 auto;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
             position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .qris-header {
-            background: var(--primary-gradient, linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%));
-            padding: 1.5rem 1rem;
-            color: #ffffff;
-            text-align: center;
+            background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+            padding: 1.25rem 1.25rem 1.15rem;
+            position: relative;
+            border-bottom: 3.5px solid #facc15;
         }
 
         .qris-logo-row {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 12px;
         }
 
@@ -199,81 +200,191 @@
             width: 48px;
             height: 48px;
             object-fit: contain;
-            background: white;
-            border-radius: 12px;
-            padding: 4px;
+            background: #000000;
+            border-radius: 13px;
+            padding: 2px;
+            border: 2px solid #facc15;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
         }
 
         .qris-header-text {
             text-align: left;
+            flex-grow: 1;
+            overflow: hidden;
         }
 
-        .qris-brand {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            line-height: 1.2;
-            color: #ffffff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        .qris-brand-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            color: #facc15;
+            text-transform: uppercase;
+            margin-bottom: 2px;
         }
 
         .qris-sub {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 500;
-            opacity: 0.95;
+            letter-spacing: 0.3px;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qris-sub-badge {
+            background: rgba(250, 204, 21, 0.2);
+            color: #facc15;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(250, 204, 21, 0.4);
             letter-spacing: 0.5px;
-            color: rgba(255,255,255,0.9);
+        }
+
+        .qris-device-section {
+            padding: 1.15rem 1rem 0.65rem;
+            text-align: center;
+        }
+
+        .qris-device-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #854d0e;
+            background: #fef9c3;
+            border: 1px solid #fef08a;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 6px;
         }
 
         .qris-device-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #1e293b;
-            text-align: center;
-            padding: 1.25rem 1rem 0.5rem;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+            word-break: break-word;
         }
 
         .qris-qr-wrapper {
-            padding: 1rem;
+            padding: 0.5rem 1.25rem 0.85rem;
             display: flex;
             justify-content: center;
         }
 
         .qris-qr-border {
-            background: white;
-            padding: 0.5rem;
-            border-radius: 20px;
-            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Modern viewfinder corners */
+        .qris-qr-border .corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-color: #facc15;
+            pointer-events: none;
+        }
+        .qris-qr-border .corner-tl {
+            top: 4px; left: 4px;
+            border-top: 3px solid #facc15;
+            border-left: 3px solid #facc15;
+            border-top-left-radius: 6px;
+        }
+        .qris-qr-border .corner-tr {
+            top: 4px; right: 4px;
+            border-top: 3px solid #facc15;
+            border-right: 3px solid #facc15;
+            border-top-right-radius: 6px;
+        }
+        .qris-qr-border .corner-bl {
+            bottom: 4px; left: 4px;
+            border-bottom: 3px solid #facc15;
+            border-left: 3px solid #facc15;
+            border-bottom-left-radius: 6px;
+        }
+        .qris-qr-border .corner-br {
+            bottom: 4px; right: 4px;
+            border-bottom: 3px solid #facc15;
+            border-right: 3px solid #facc15;
+            border-bottom-right-radius: 6px;
+        }
+
+        .qris-token-box {
+            margin: 0.25rem 1.25rem 0.85rem;
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             position: relative;
         }
 
-        .qris-qr-border::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 22px;
-            background: var(--primary-gradient, linear-gradient(135deg, #0ea5e9, #8b5cf6));
-            z-index: -1;
+        .qris-token-box:hover {
+            background: #fefce8;
+            border-color: #facc15;
+        }
+
+        .qris-token-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .qris-token-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .qris-token {
-            font-family: monospace;
-            font-size: 1.25rem;
-            letter-spacing: 3px;
-            color: #334155;
-            text-align: center;
-            padding: 0.5rem;
-            font-weight: 600;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 1.05rem;
+            letter-spacing: 1.5px;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .qris-token-copy-icon {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            transition: color 0.2s ease;
+        }
+
+        .qris-token-box:hover .qris-token-copy-icon {
+            color: #ca8a04;
         }
 
         .qris-footer {
             background: #f8fafc;
-            padding: 1rem;
+            padding: 0.75rem 1rem;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: #64748b;
             font-weight: 500;
-            border-top: 1px dashed #e2e8f0;
+            border-top: 1px solid #f1f5f9;
         }
 
         .qr-modal .modal-body {
@@ -302,19 +413,25 @@
         }
 
         .btn-download-qr {
-            background: var(--primary-gradient, linear-gradient(135deg, #0ea5e9, #0369a1));
-            border: none;
-            color: #fff;
-            padding: 0.65rem 1.5rem;
+            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+            border: 1px solid #eab308;
+            color: #000000;
+            padding: 0.7rem 1.75rem;
             border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-download-qr:hover {
+            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
-            color: #fff;
+            box-shadow: 0 8px 22px rgba(234, 179, 8, 0.45);
+            color: #000000;
         }
 
         /* Empty State */
@@ -660,45 +777,61 @@
             </div>
         </div>
 
-    <!-- QR Code Modal - QRIS Style -->
+    <!-- QR Code Modal - Modern IoT Pass Style -->
     <div class="modal fade qr-modal" id="qrModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
             <div class="modal-content">
                 <div class="modal-body p-0">
                     <!-- Close button -->
                     <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal"
-                        style="top: 12px; right: 12px; z-index: 10; filter: invert(1);"></button>
+                        style="top: 14px; right: 14px; z-index: 10; filter: invert(1); opacity: 0.8;"></button>
 
                     <!-- QRIS-style Card -->
                     <div class="qris-card" id="qrisCard">
                         <!-- Header gradient band -->
                         <div class="qris-header">
                             <div class="qris-logo-row">
-                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=4" alt="Logo" class="qris-header-logo">
+                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=5" alt="Tanikaya" class="qris-header-logo">
                                 <div class="qris-header-text">
-                                    <div class="qris-brand">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
-                                    <div class="qris-sub">{{ config('app.tagline', 'Best Solution for Agriculture Machinery') }}</div>
+                                    <div class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
+                                    <div class="qris-sub">
+                                        <span class="qris-sub-badge">IoT</span>
+                                        <span>Smart Agriculture System</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Device name -->
-                        <div class="qris-device-name" id="qrisDeviceName">Device Name</div>
+                        <!-- Device section -->
+                        <div class="qris-device-section">
+                            <span class="qris-device-badge"><i class="bi bi-cpu-fill"></i> Perangkat Terdaftar</span>
+                            <div class="qris-device-name" id="qrisDeviceName">Device Name</div>
+                        </div>
 
-                        <!-- QR Code area with gradient border -->
+                        <!-- QR Code area with viewfinder corners -->
                         <div class="qris-qr-wrapper">
                             <div class="qris-qr-border">
+                                <span class="corner corner-tl"></span>
+                                <span class="corner corner-tr"></span>
+                                <span class="corner corner-bl"></span>
+                                <span class="corner corner-br"></span>
                                 <div id="qrCanvas" style="width: 260px; min-height: 260px; margin: 0 auto;"></div>
                             </div>
                         </div>
-                        <div id="qrError" class="text-danger text-center mt-2" style="display: none; font-size: 0.9rem;"></div>
+                        <div id="qrError" class="text-danger text-center mt-1 mb-2 px-3" style="display: none; font-size: 0.85rem;"></div>
 
-                        <!-- Token -->
-                        <div class="qris-token" id="qrisToken">XXXXXXXXXXXXXXXX</div>
+                        <!-- Token Box with Copy -->
+                        <div class="qris-token-box" onclick="copyCardToken(this)" title="Klik untuk menyalin token">
+                            <div class="qris-token-label">KODE TOKEN PERANGKAT</div>
+                            <div class="qris-token-inner">
+                                <span class="qris-token" id="qrisToken">XXXXXXXXXXXXXXXX</span>
+                                <i class="bi bi-clipboard qris-token-copy-icon" id="qrisCopyIcon"></i>
+                            </div>
+                        </div>
 
                         <!-- Footer -->
                         <div class="qris-footer">
-                            <span><i class="bi bi-shield-check me-1"></i>Scan untuk tambah device</span>
+                            <span><i class="bi bi-shield-check text-warning me-1"></i>Scan via kamera aplikasi Swaratani</span>
                         </div>
                     </div>
 
@@ -795,18 +928,43 @@
         let currentDeviceName = '';
         const logoImg = new Image();
         logoImg.crossOrigin = 'anonymous';
-        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=4';
+        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=5';
 
         function showQrModal(token, deviceName) {
             currentDeviceName = deviceName;
             document.getElementById('qrisDeviceName').textContent = deviceName;
             document.getElementById('qrisToken').textContent = token;
 
+            // Reset copy button status
+            const copyIcon = document.getElementById('qrisCopyIcon');
+            if (copyIcon) {
+                copyIcon.className = 'bi bi-clipboard qris-token-copy-icon';
+            }
+
             // Wait a tiny bit for modal to be visible then generate
             setTimeout(() => generateQrisQr(token), 100);
 
             const modal = new bootstrap.Modal(document.getElementById('qrModal'));
             modal.show();
+        }
+
+        function copyCardToken(boxEl) {
+            const tokenEl = document.getElementById('qrisToken');
+            if (!tokenEl) return;
+            const token = tokenEl.textContent.trim();
+            if (!token) return;
+
+            navigator.clipboard.writeText(token).then(() => {
+                const icon = document.getElementById('qrisCopyIcon');
+                if (icon) {
+                    icon.className = 'bi bi-check2-circle text-success fw-bold';
+                    setTimeout(() => {
+                        icon.className = 'bi bi-clipboard qris-token-copy-icon';
+                    }, 2000);
+                }
+            }).catch(err => {
+                console.warn('Clipboard write failed:', err);
+            });
         }
 
         function generateQrisQr(text) {
@@ -830,7 +988,7 @@
                     text: text,
                     width: 260,
                     height: 260,
-                    colorDark: '#111827',
+                    colorDark: '#0f172a',
                     colorLight: '#ffffff',
                     correctLevel: QRCode.CorrectLevel.H,
                 });
@@ -854,7 +1012,7 @@
 
                 if (qrCanvasEl) {
                     // Style the canvas
-                    qrCanvasEl.style.borderRadius = '12px';
+                    qrCanvasEl.style.borderRadius = '14px';
                     qrCanvasEl.style.display = 'block';
 
                     // Draw logo overlay on top of the canvas
@@ -874,46 +1032,62 @@
                 if (qrImg && qrCanvasEl) {
                     qrImg.style.display = 'none';
                 }
-            }, 500);
+            }, 300);
         }
 
         function drawLogoOnCanvas(ctx, size) {
-            const logoSize = size * 0.25;
+            const containerSize = 70; // 26.9% of 260px QR, safely within 30% H-level error correction
             const cx = size / 2;
             const cy = size / 2;
-            const padding = 5;
-            const totalSize = logoSize + padding * 2;
+            const x = cx - containerSize / 2;
+            const y = cy - containerSize / 2;
+            const radius = 16;
 
-            // White circle background
-            ctx.fillStyle = '#ffffff';
+            ctx.save();
+
+            // Draw clean rounded rectangle (squircle) container
             ctx.beginPath();
-            ctx.arc(cx, cy, totalSize / 2 + 2, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Border ring using theme primary color
-            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#eab308';
-            ctx.strokeStyle = primaryColor;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.arc(cx, cy, totalSize / 2 + 2, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // Calculate aspect ratio so image doesn't stretch or distort
-            let w = logoSize;
-            let h = logoSize;
-            if (logoImg.naturalWidth && logoImg.naturalHeight) {
-                const aspect = logoImg.naturalWidth / logoImg.naturalHeight;
-                if (aspect > 1) {
-                    w = logoSize;
-                    h = logoSize / aspect;
-                } else {
-                    h = logoSize;
-                    w = logoSize * aspect;
-                }
+            if (ctx.roundRect) {
+                ctx.roundRect(x, y, containerSize, containerSize, radius);
+            } else {
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + containerSize - radius, y);
+                ctx.quadraticCurveTo(x + containerSize, y, x + containerSize, y + radius);
+                ctx.lineTo(x + containerSize, y + containerSize - radius);
+                ctx.quadraticCurveTo(x + containerSize, y + containerSize, x + containerSize - radius, y + containerSize);
+                ctx.lineTo(x + radius, y + containerSize);
+                ctx.quadraticCurveTo(x, y + containerSize, x, y + containerSize - radius);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+                ctx.closePath();
             }
 
-            // Draw the logo image centered
-            ctx.drawImage(logoImg, cx - w / 2, cy - h / 2, w, h);
+            // Subtle drop shadow for depth and separation from modules
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+            ctx.shadowBlur = 8;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 2;
+
+            // Pure white background
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            // Thin gold accent stroke
+            ctx.shadowColor = 'transparent';
+            ctx.strokeStyle = '#facc15';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            ctx.restore();
+
+            // Draw centered logo inside with 6px margin
+            const badgeSize = 58;
+            const bx = cx - badgeSize / 2;
+            const by = cy - badgeSize / 2;
+
+            if (logoImg.complete && logoImg.naturalWidth > 0) {
+                ctx.drawImage(logoImg, bx, by, badgeSize, badgeSize);
+            }
         }
 
         function downloadQr() {
@@ -922,6 +1096,7 @@
                 scale: 3,
                 backgroundColor: '#ffffff',
                 useCORS: true,
+                logging: false,
             }).then(function(canvas) {
                 const link = document.createElement('a');
                 const safeName = currentDeviceName.replace(/[^a-zA-Z0-9]/g, '_');
