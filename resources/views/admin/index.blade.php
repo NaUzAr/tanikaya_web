@@ -184,89 +184,43 @@
 
         .qris-header {
             background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
-            padding: 1.25rem 1.25rem 1.15rem;
+            padding: 1.15rem 1rem;
             position: relative;
             border-bottom: 3.5px solid #facc15;
+            text-align: center;
         }
 
         .qris-logo-row {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 12px;
         }
 
         .qris-header-logo {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             object-fit: contain;
             background: #000000;
-            border-radius: 13px;
+            border-radius: 12px;
             padding: 2px;
             border: 2px solid #facc15;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             flex-shrink: 0;
         }
 
-        .qris-header-text {
-            text-align: left;
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
         .qris-brand-title {
-            font-size: 1.2rem;
+            font-size: 1.45rem;
             font-weight: 900;
-            letter-spacing: 1.5px;
-            line-height: 1.1;
+            letter-spacing: 2.5px;
+            line-height: 1;
             color: #facc15;
             text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-
-        .qris-sub {
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            color: #cbd5e1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .qris-sub-badge {
-            background: rgba(250, 204, 21, 0.2);
-            color: #facc15;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 1px 6px;
-            border-radius: 4px;
-            border: 1px solid rgba(250, 204, 21, 0.4);
-            letter-spacing: 0.5px;
         }
 
         .qris-device-section {
-            padding: 1.15rem 1rem 0.65rem;
+            padding: 1.15rem 1rem 0.4rem;
             text-align: center;
-        }
-
-        .qris-device-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #854d0e;
-            background: #fef9c3;
-            border: 1px solid #fef08a;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-bottom: 6px;
         }
 
         .qris-device-name {
@@ -791,20 +745,13 @@
                         <!-- Header gradient band -->
                         <div class="qris-header">
                             <div class="qris-logo-row">
-                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=5" alt="Tanikaya" class="qris-header-logo">
-                                <div class="qris-header-text">
-                                    <div class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
-                                    <div class="qris-sub">
-                                        <span class="qris-sub-badge">IoT</span>
-                                        <span>Smart Agriculture System</span>
-                                    </div>
-                                </div>
+                                <img src="{{ asset(config('app.logo', 'images/logo.png')) }}?v=6" alt="Tanikaya" class="qris-header-logo">
+                                <span class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</span>
                             </div>
                         </div>
 
                         <!-- Device section -->
                         <div class="qris-device-section">
-                            <span class="qris-device-badge"><i class="bi bi-cpu-fill"></i> Perangkat Terdaftar</span>
                             <div class="qris-device-name" id="qrisDeviceName">Device Name</div>
                         </div>
 
@@ -928,7 +875,7 @@
         let currentDeviceName = '';
         const logoImg = new Image();
         logoImg.crossOrigin = 'anonymous';
-        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=5';
+        logoImg.src = '{{ asset(config('app.logo', 'images/logo.png')) }}?v=6';
 
         function showQrModal(token, deviceName) {
             currentDeviceName = deviceName;
