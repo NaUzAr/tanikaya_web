@@ -234,6 +234,22 @@
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qris-sub-badge {
+            background: rgba(250, 204, 21, 0.2);
+            color: #facc15;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            line-height: 1.2;
         }
 
         .qris-sub-highlight {
@@ -772,7 +788,8 @@
                                 <div class="qris-header-text">
                                     <div class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
                                     <div class="qris-sub">
-                                        Best Solution for <span class="qris-sub-highlight">Agriculture Machinery</span>
+                                        <span class="qris-sub-badge">IoT</span>
+                                        <span>Best Solution for <span class="qris-sub-highlight">Agriculture Machinery</span></span>
                                     </div>
                                 </div>
                             </div>

@@ -11,11 +11,18 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::where('user_id', Auth::id())
+        $userId = Auth::id();
+        $tickets = Ticket::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(15);
+
+        $counts = [
+            'all' => Ticket::where('user_id', $userId)->count(),
+            'open' => Ticket::where('user_id', $userId)->whereIn('status', ['open', 'in_progress'])->count(),
+            'resolved' => Ticket::where('user_id', $userId)->whereIn('status', ['resolved', 'closed'])->count(),
+        ];
             
-        return view('tickets.index', compact('tickets'));
+        return view('tickets.index', compact('tickets', 'counts'));
     }
 
     public function create()

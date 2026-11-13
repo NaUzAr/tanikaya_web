@@ -1,221 +1,251 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah Device - {{ config('app.name', 'Tanikaya') }}</title>
+    <title>Tambah Perangkat - {{ config('app.name', 'Tanikaya') }}</title>
+    @include('partials.pwa-head')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     @include('partials.theme')
 
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
         body {
             min-height: 100vh;
-            background: var(--nature-gradient, #f8fafc);
+            background-color: #f8fafc;
+            color: #0f172a;
         }
 
         .add-card {
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             padding: 2.5rem;
             border-radius: 24px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+            transition: all 0.3s ease;
         }
 
         .card-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-gradient);
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+            border: 2.5px solid #facc15;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
-            font-size: 2.5rem;
+            font-size: 2.25rem;
+            color: #facc15;
         }
 
         .card-title {
-            color: #1f2937;
-            font-weight: 700;
+            color: #0f172a;
+            font-weight: 800;
             text-align: center;
             margin-bottom: 0.5rem;
+            font-size: 1.45rem;
+            letter-spacing: -0.3px;
         }
 
         .card-subtitle {
             color: #64748b;
             text-align: center;
             margin-bottom: 2rem;
+            font-size: 0.88rem;
+            line-height: 1.5;
         }
 
         .form-label {
-            color: var(--primary-dark);
-            font-weight: 600;
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-bottom: 0.4rem;
         }
 
-        .form-control {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid var(--glass-border);
-            color: #1f2937;
-            border-radius: 12px;
-            padding: 0.85rem 1rem;
-            transition: all 0.3s ease;
-            font-family: monospace;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
+        .form-label i {
+            color: #ca8a04;
+        }
+
+        .form-control-token {
+            background: #f8fafc;
+            border: 1.5px solid #cbd5e1;
+            color: #0f172a;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            transition: all 0.25s ease;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
             text-align: center;
+            text-transform: uppercase;
         }
 
-        .form-control:focus {
-            background: #fff;
-            border-color: var(--primary-color);
-            color: #1f2937;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
-        }
-
-        .form-control::placeholder {
-            color: #94a3b8;
-            letter-spacing: 1px;
+        .form-control-token:focus {
+            background: #ffffff;
+            border-color: #eab308;
+            color: #0f172a;
+            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
         }
 
         .form-control-name {
-            font-family: 'Inter', sans-serif;
-            letter-spacing: normal;
-            text-align: left;
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            color: #0f172a;
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+        }
+
+        .form-control-name:focus {
+            background: #ffffff;
+            border-color: #eab308;
+            color: #0f172a;
+            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
         }
 
         .alert-danger-custom {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #dc2626;
-            border-radius: 12px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
         }
 
         .alert-info-custom {
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            color: #0284c7;
+            background: #fefce8;
+            border: 1px solid #fef08a;
+            color: #854d0e;
             border-radius: 12px;
+            padding: 0.85rem 1rem;
         }
 
-        .form-text-light {
-            color: #64748b;
+        .btn-gradient-submit {
+            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+            border: 1px solid #eab308;
+            color: #000000 !important;
+            padding: 0.85rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.35);
         }
 
-        .btn-glass {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+        .btn-gradient-submit:hover {
+            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
+            color: #000000 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(234, 179, 8, 0.45);
+        }
+
+        .btn-back-clean {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
             color: #475569;
-            padding: 0.85rem;
-            border-radius: 12px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
             font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align: center;
         }
 
-        .btn-glass:hover {
-            background: rgba(0, 0, 0, 0.05);
-            color: #1f2937;
+        .btn-back-clean:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #94a3b8;
         }
 
-        /* ========= QR Scanner ========= */
+        /* ========= QR Scanner Buttons ========= */
         .btn-outline-scan {
-            background: transparent;
-            border: 2px dashed var(--primary-color, #0ea5e9);
-            color: var(--primary-color, #0ea5e9);
+            background: #fefce8;
+            border: 2px dashed #ca8a04;
+            color: #854d0e;
             border-radius: 12px;
-            padding: 0.75rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
         }
 
         .btn-outline-scan:hover {
-            background: rgba(14, 165, 233, 0.1);
-            border-style: solid;
-            color: var(--primary-dark, #0369a1);
+            background: #fef08a;
+            border-color: #eab308;
+            color: #713f12;
+            transform: translateY(-1px);
         }
 
         .btn-outline-scan.scanning {
-            background: rgba(239, 68, 68, 0.1);
+            background: #fef2f2;
             border-color: #ef4444;
             border-style: solid;
-            color: #ef4444;
+            color: #dc2626;
         }
 
         .btn-outline-scan-img {
-            background: transparent;
-            border: 2px dashed #8b5cf6;
-            color: #8b5cf6;
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            color: #475569;
             border-radius: 12px;
-            padding: 0.75rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
         }
 
         .btn-outline-scan-img:hover {
-            background: rgba(139, 92, 246, 0.1);
-            border-style: solid;
-            color: #7c3aed;
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-1px);
         }
 
         #qrReader {
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
+            border: 2px solid #eab308;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         #qrReader video {
-            border-radius: 12px;
+            border-radius: 14px;
         }
 
         /* ========= Mobile Responsive ========= */
         @media (max-width: 576px) {
-            body {
-                padding: 1rem;
-                align-items: flex-start;
-                padding-top: 2rem;
-            }
-
             .add-card {
-                padding: 1.75rem 1.5rem;
+                padding: 1.75rem 1.25rem;
                 border-radius: 20px;
             }
 
             .card-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
+                width: 64px;
+                height: 64px;
+                font-size: 1.85rem;
                 border-radius: 16px;
                 margin-bottom: 1rem;
             }
 
             .card-title {
-                font-size: 1.15rem;
+                font-size: 1.25rem;
             }
 
-            .card-subtitle {
-                font-size: 0.85rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .form-control {
-                font-size: 16px;
-                min-height: 48px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            body {
-                padding: 0.75rem;
-                padding-top: 1.5rem;
-            }
-
-            .add-card {
-                padding: 1.5rem 1.25rem;
+            .form-control-token {
+                font-size: 1.05rem;
+                letter-spacing: 2px;
             }
         }
     </style>
@@ -228,80 +258,87 @@
 
     <div class="container py-4 my-2 d-flex justify-content-center">
         <div class="add-card">
-        <div class="card-icon">
-            <i class="bi bi-key-fill text-white"></i>
-        </div>
-        <h4 class="card-title">Tambah Device</h4>
-        <p class="card-subtitle">Masukkan token device untuk mulai monitoring</p>
-
-        @if ($errors->any())
-            <div class="alert alert-danger-custom mb-4">
-                <ul class="mb-0 small">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <!-- Icon -->
+            <div class="card-icon">
+                <i class="bi bi-qr-code-scan"></i>
             </div>
-        @endif
+            <h4 class="card-title">Tambah Perangkat IoT</h4>
+            <p class="card-subtitle">Scan kartu QR perangkat atau masukkan 16 karakter token Tanikaya Anda.</p>
 
-        <form action="{{ route('monitoring.store') }}" method="POST">
-            @csrf
-
-            <div class="mb-3">
-                <label class="form-label"><i class="bi bi-key me-1"></i>Token Device</label>
-                <input type="text" class="form-control" name="token" id="tokenInput" value="{{ old('token') }}"
-                    placeholder="XXXXXXXXXXXXXXXX" maxlength="16" required autofocus>
-                <div class="form-text form-text-light">
-                    Token terdiri dari 16 karakter. Dapatkan dari admin.
+            @if ($errors->any())
+                <div class="alert alert-danger-custom mb-4">
+                    <ul class="mb-0 small ps-3">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-            </div>
+            @endif
 
-            <!-- QR Scanner Section -->
-            <div class="mb-3">
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-outline-scan flex-grow-1" id="btnScanQR" onclick="toggleScanner()">
-                        <i class="bi bi-camera me-2"></i>Scan Kamera
+            <form action="{{ route('monitoring.store') }}" method="POST">
+                @csrf
+
+                <!-- Token Input -->
+                <div class="mb-3">
+                    <label class="form-label"><i class="bi bi-key-fill me-1"></i>Kode Token Perangkat</label>
+                    <input type="text" class="form-control form-control-token" name="token" id="tokenInput" value="{{ old('token') }}"
+                        placeholder="XXXXXXXXXXXXXXXX" maxlength="16" required autofocus autocomplete="off">
+                    <div class="form-text small text-muted mt-1 text-center">
+                        <i class="bi bi-info-circle me-1"></i>Token 16 karakter tercetak di kartu QR perangkat Tanikaya Anda.
+                    </div>
+                </div>
+
+                <!-- QR Scanner Section -->
+                <div class="mb-4">
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-scan flex-grow-1" id="btnScanQR" onclick="toggleScanner()">
+                            <i class="bi bi-camera me-1"></i>Scan Kamera
+                        </button>
+                        <button type="button" class="btn btn-outline-scan-img flex-grow-1" onclick="document.getElementById('qrImageInput').click()">
+                            <i class="bi bi-image me-1"></i>Pilih Foto QR
+                        </button>
+                        <input type="file" id="qrImageInput" accept="image/*" style="display:none" onchange="scanFromImage(this)">
+                    </div>
+                    <div id="qrScannerContainer" style="display: none;">
+                        <div id="qrReader" style="width: 100%; margin-top: 0.85rem;"></div>
+                    </div>
+                    <div id="qrScanStatus" class="text-center mt-2" style="display: none;">
+                        <span class="badge bg-success bg-opacity-15 text-success py-2 px-3 rounded-pill fw-bold">
+                            <i class="bi bi-check-circle-fill me-1"></i>Token berhasil terdeteksi!
+                        </span>
+                    </div>
+                    <div id="qrScanError" class="text-center mt-2" style="display: none;">
+                        <span class="badge bg-danger bg-opacity-15 text-danger py-2 px-3 rounded-pill fw-bold">
+                            <i class="bi bi-x-circle-fill me-1"></i>QR Code tidak ditemukan di gambar.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Custom Name -->
+                <div class="mb-4">
+                    <label class="form-label"><i class="bi bi-tag-fill me-1"></i>Nama Label Perangkat (Opsional)</label>
+                    <input type="text" class="form-control form-control-name" name="custom_name"
+                        value="{{ old('custom_name') }}" placeholder="Contoh: Mesin Dryer Blok 1, Greenhouse B">
+                    <div class="form-text small text-muted mt-1">
+                        Beri nama alias agar mudah dikenali di dasbor monitoring Anda.
+                    </div>
+                </div>
+
+                <div class="alert alert-info-custom mb-4">
+                    <small><i class="bi bi-shield-check me-1"></i>
+                        Perangkat yang ditambahkan akan otomatis tersinkronisasi ke akun Anda dan dapat dipantau secara realtime.
+                    </small>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-gradient-submit">
+                        <i class="bi bi-plus-circle-fill me-2"></i>Hubungkan Perangkat
                     </button>
-                    <button type="button" class="btn btn-outline-scan-img flex-grow-1" onclick="document.getElementById('qrImageInput').click()">
-                        <i class="bi bi-image me-2"></i>Scan dari Gambar
-                    </button>
-                    <input type="file" id="qrImageInput" accept="image/*" style="display:none" onchange="scanFromImage(this)">
+                    <a href="{{ route('monitoring.index') }}" class="btn btn-back-clean">
+                        <i class="bi bi-arrow-left me-1"></i> Kembali ke Dasbor
+                    </a>
                 </div>
-                <div id="qrScannerContainer" style="display: none;">
-                    <div id="qrReader" style="width: 100%; margin-top: 0.75rem; border-radius: 12px; overflow: hidden;"></div>
-                </div>
-                <div id="qrScanStatus" class="text-center mt-2" style="display: none;">
-                    <small class="text-success"><i class="bi bi-check-circle me-1"></i>Token berhasil di-scan!</small>
-                </div>
-                <div id="qrScanError" class="text-center mt-2" style="display: none;">
-                    <small class="text-danger"><i class="bi bi-x-circle me-1"></i>QR Code tidak ditemukan di gambar.</small>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label"><i class="bi bi-tag me-1"></i>Nama Custom (Opsional)</label>
-                <input type="text" class="form-control form-control-name" name="custom_name"
-                    value="{{ old('custom_name') }}" placeholder="Contoh: Sensor Kebun Saya">
-                <div class="form-text form-text-light">
-                    Beri nama untuk memudahkan identifikasi device.
-                </div>
-            </div>
-
-            <div class="alert alert-info-custom mb-4">
-                <small><i class="bi bi-info-circle me-1"></i>
-                    Device akan tersimpan di akun Anda dan bisa dilihat kapan saja sampai Anda menghapusnya.
-                </small>
-            </div>
-
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-gradient">
-                    <i class="bi bi-plus-circle me-2"></i>Tambahkan Device
-                </button>
-                <a href="{{ route('monitoring.index') }}" class="btn btn-glass text-center">
-                    <i class="bi bi-arrow-left me-1"></i> Kembali
-                </a>
-            </div>
-        </form>
+            </form>
         </div>
     </div>
 
@@ -325,7 +362,7 @@
             const statusEl = document.getElementById('qrScanStatus');
             container.style.display = 'block';
             statusEl.style.display = 'none';
-            btn.innerHTML = '<i class="bi bi-x-circle me-2"></i>Tutup Scanner';
+            btn.innerHTML = '<i class="bi bi-x-circle me-1"></i>Tutup Kamera';
             btn.classList.add('scanning');
 
             html5QrCode = new Html5Qrcode("qrReader");
@@ -340,22 +377,20 @@
                 aspectRatio: 1.0,
             };
 
-            // Prefer rear camera on mobile devices
             html5QrCode.start(
                 { facingMode: "environment" },
                 config,
                 onScanSuccess,
                 onScanFailure
             ).catch(err => {
-                // Fallback: try any available camera
                 html5QrCode.start(
-                    { facingMode: "user" },
+                    {},
                     config,
                     onScanSuccess,
                     onScanFailure
                 ).catch(err2 => {
-                    console.error("Camera error:", err2);
-                    alert("Tidak dapat mengakses kamera. Pastikan izin kamera diaktifkan dan halaman diakses via HTTPS.");
+                    console.error('Camera start error:', err2);
+                    alert('Tidak dapat mengakses kamera. Pastikan izin kamera sudah diberikan.');
                     stopScanner();
                 });
             });
@@ -364,87 +399,80 @@
         }
 
         function stopScanner() {
-            const container = document.getElementById('qrScannerContainer');
-            const btn = document.getElementById('btnScanQR');
-            btn.innerHTML = '<i class="bi bi-qr-code-scan me-2"></i>Scan QR Code';
-            btn.classList.remove('scanning');
-
             if (html5QrCode && scannerRunning) {
                 html5QrCode.stop().then(() => {
                     html5QrCode.clear();
-                    container.style.display = 'none';
+                    document.getElementById('qrScannerContainer').style.display = 'none';
+                    const btn = document.getElementById('btnScanQR');
+                    btn.innerHTML = '<i class="bi bi-camera me-1"></i>Scan Kamera';
+                    btn.classList.remove('scanning');
+                    scannerRunning = false;
                 }).catch(err => {
-                    console.error("Stop error:", err);
-                    container.style.display = 'none';
+                    console.error('Stop error:', err);
+                    document.getElementById('qrScannerContainer').style.display = 'none';
+                    scannerRunning = false;
                 });
-            } else {
-                container.style.display = 'none';
             }
-            scannerRunning = false;
         }
 
         function onScanSuccess(decodedText, decodedResult) {
-            // Extract token: take up to 16 characters, remove whitespace
-            let token = decodedText.trim().replace(/\s/g, '');
-            if (token.length > 16) {
-                token = token.substring(0, 16);
+            let token = decodedText.trim();
+            // Handle URL with token query param or raw token
+            if (token.includes('token=')) {
+                try {
+                    const url = new URL(token);
+                    token = url.searchParams.get('token') || token;
+                } catch(e) {}
             }
+            // Strip non-alphanumeric
+            token = token.replace(/[^a-zA-Z0-9]/g, '');
+            if (token.length > 16) token = token.substring(0, 16);
 
-            // Fill the token field
-            const tokenInput = document.getElementById('tokenInput');
-            tokenInput.value = token;
-            tokenInput.focus();
+            document.getElementById('tokenInput').value = token;
+            document.getElementById('qrScanStatus').style.display = 'block';
+            document.getElementById('qrScanError').style.display = 'none';
 
-            // Show success status
-            const statusEl = document.getElementById('qrScanStatus');
-            statusEl.style.display = 'block';
-
-            // Add success animation to token field
-            tokenInput.style.borderColor = '#22c55e';
-            tokenInput.style.boxShadow = '0 0 0 3px rgba(34, 197, 94, 0.3)';
-            setTimeout(() => {
-                tokenInput.style.borderColor = '';
-                tokenInput.style.boxShadow = '';
-            }, 2000);
-
-            // Stop scanner after successful scan
             stopScanner();
-            // Keep the success status visible
-            document.getElementById('qrScannerContainer').style.display = 'block';
         }
 
         function onScanFailure(error) {
-            // Ignore scan failures (continuous scanning)
+            // silent scan frame failures
         }
 
         function scanFromImage(input) {
             if (!input.files || !input.files[0]) return;
-
             const file = input.files[0];
             const statusEl = document.getElementById('qrScanStatus');
             const errorEl = document.getElementById('qrScanError');
             statusEl.style.display = 'none';
             errorEl.style.display = 'none';
 
-            // Stop camera scanner if running
-            if (scannerRunning) stopScanner();
+            const scanner = new Html5Qrcode("qrReader");
+            scanner.scanFile(file, true)
+                .then(decodedText => {
+                    let token = decodedText.trim();
+                    if (token.includes('token=')) {
+                        try {
+                            const url = new URL(token);
+                            token = url.searchParams.get('token') || token;
+                        } catch(e) {}
+                    }
+                    token = token.replace(/[^a-zA-Z0-9]/g, '');
+                    if (token.length > 16) token = token.substring(0, 16);
 
-            const scanner = new Html5Qrcode('qrReader');
-            scanner.scanFileV2(file, true)
-                .then(result => {
-                    onScanSuccess(result.decodedText, result);
+                    document.getElementById('tokenInput').value = token;
+                    statusEl.style.display = 'block';
+                    errorEl.style.display = 'none';
+                    scanner.clear();
                 })
                 .catch(err => {
-                    console.error('Image scan error:', err);
+                    console.error('Scan file error:', err);
                     errorEl.style.display = 'block';
-                    setTimeout(() => { errorEl.style.display = 'none'; }, 3000);
+                    scanner.clear();
                 });
-
-            // Reset file input so same file can be re-selected
             input.value = '';
         }
     </script>
-
 </body>
 
 </html>
