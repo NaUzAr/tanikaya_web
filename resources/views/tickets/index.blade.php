@@ -16,187 +16,130 @@
         }
 
         body {
-            background-color: #f8fafc;
-            color: #0f172a;
+            background: var(--nature-gradient, #f8fafc);
+            color: var(--text-main);
             min-height: 100vh;
         }
 
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
         .page-title {
-            color: #0f172a;
+            color: var(--text-main);
             font-weight: 800;
-            font-size: 1.75rem;
-            letter-spacing: -0.5px;
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
         }
 
-        .page-title-icon {
-            color: #eab308;
-            margin-right: 0.5rem;
-        }
-
-        .btn-create-ticket {
-            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-            border: 1px solid #eab308;
-            color: #000000 !important;
-            padding: 0.65rem 1.4rem;
+        .btn-gradient {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.4rem;
             border-radius: 50px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 14px rgba(234, 179, 8, 0.35);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--glow-1);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 0.4rem;
             text-decoration: none;
         }
 
-        .btn-create-ticket:hover {
-            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
+        .btn-gradient:hover {
+            color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(234, 179, 8, 0.45);
-            color: #000000 !important;
-        }
-
-        /* Stat cards */
-        .stat-mini-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1rem 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-            transition: all 0.2s ease;
-        }
-
-        .stat-mini-card:hover {
-            transform: translateY(-2px);
-            border-color: #cbd5e1;
-        }
-
-        .stat-mini-val {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #0f172a;
-            line-height: 1;
-        }
-
-        .stat-mini-lbl {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            margin-bottom: 0.2rem;
+            box-shadow: 0 8px 25px var(--glow-2);
         }
 
         /* Ticket Cards */
         .ticket-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 18px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 1.25rem 1.5rem;
             margin-bottom: 1rem;
             text-decoration: none;
             color: inherit;
             display: block;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
-            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
 
         .ticket-card:hover {
-            border-color: #facc15;
+            border-color: var(--primary);
             transform: translateY(-2px);
             color: inherit;
-            box-shadow: 0 8px 24px rgba(234, 179, 8, 0.15);
-            background: #ffffff;
+            box-shadow: 0 10px 25px var(--glow-1);
         }
 
         .ticket-code {
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
             font-weight: 700;
             font-size: 0.8rem;
-            color: #0f172a;
-            background: #f1f5f9;
+            color: var(--text-secondary);
+            background: rgba(100, 116, 139, 0.08);
             padding: 3px 8px;
             border-radius: 6px;
             display: inline-block;
         }
 
         .ticket-subject {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #0f172a;
-            line-height: 1.3;
-            letter-spacing: -0.2px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            line-height: 1.35;
         }
 
-        .badge-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 700;
-            font-size: 0.72rem;
-            letter-spacing: 0.3px;
+        .status-badge {
+            font-size: 0.75rem;
             padding: 0.3rem 0.7rem;
             border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        .badge-status::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-
-        .status-open { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-        .status-open::before { background: #f59e0b; }
-
-        .status-in_progress { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
-        .status-in_progress::before { background: #0284c7; }
-
-        .status-resolved { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-        .status-resolved::before { background: #16a34a; }
-
-        .status-closed { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-        .status-closed::before { background: #94a3b8; }
-
-        .badge-category {
-            background: #f8fafc;
-            color: #475569;
-            border: 1px solid #e2e8f0;
-            font-size: 0.75rem;
             font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .empty-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 24px;
-            padding: 3.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-        }
-
-        .empty-card-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: #fef9c3;
-            color: #ca8a04;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            margin: 0 auto 1.25rem;
+            letter-spacing: 0.3px;
+        }
+
+        .status-open { background: var(--glow-1); color: var(--primary); }
+        .status-in_progress { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+        .status-resolved { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+        .status-closed { background: rgba(100, 116, 139, 0.12); color: #64748b; }
+
+        .ticket-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px dashed var(--glass-border);
+            border-radius: 24px;
+            margin-top: 2rem;
+        }
+
+        .empty-state > i {
+            font-size: 3.5rem;
+            color: var(--primary);
+            opacity: 0.8;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state h5 {
+            color: var(--text-main);
+            margin-top: 1.5rem;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            max-width: 420px;
+            margin: 0.5rem auto 1.5rem auto;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -207,55 +150,24 @@
 
     <div class="container py-4">
         <!-- Header Bar -->
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3 page-header">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
             <div>
-                <h2 class="page-title mb-1">
-                    <i class="bi bi-headset page-title-icon"></i>Tiket Bantuan & Dukungan
+                <h2 class="page-title mb-0">
+                    <i class="bi bi-headset me-2 text-primary"></i>Tiket Bantuan
                 </h2>
-                <p class="text-muted mb-0 small">Sampaikan keluhan, pertanyaan, atau kendala perangkat dan aplikasi Anda kepada Tim Tanikaya.</p>
+                <p class="text-secondary mb-0 small">Sampaikan pertanyaan atau kendala perangkat Anda kepada tim dukungan.</p>
             </div>
-            <a href="{{ route('tickets.create') }}" class="btn-create-ticket">
-                <i class="bi bi-plus-lg"></i> Buat Tiket Baru
+            <a href="{{ route('tickets.create') }}" class="btn btn-gradient">
+                <i class="bi bi-plus-lg me-1"></i> Buat Tiket
             </a>
         </div>
 
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" style="background: #dcfce7; color: #15803d; border-radius: 14px;" role="alert">
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" style="background: rgba(16, 185, 129, 0.15); color: #15803d; border-radius: 14px;" role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-
-        <!-- 3 Quick Stats Cards -->
-        <div class="row g-3 mb-4">
-            <div class="col-4">
-                <div class="stat-mini-card">
-                    <div>
-                        <div class="stat-mini-lbl">Total Tiket</div>
-                        <div class="stat-mini-val">{{ $counts['all'] ?? $tickets->total() }}</div>
-                    </div>
-                    <i class="bi bi-inboxes text-muted fs-3"></i>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="stat-mini-card" style="border-left: 4px solid #f59e0b;">
-                    <div>
-                        <div class="stat-mini-lbl" style="color: #b45309;">Sedang Aktif</div>
-                        <div class="stat-mini-val" style="color: #b45309;">{{ $counts['open'] ?? 0 }}</div>
-                    </div>
-                    <i class="bi bi-clock-history text-warning fs-3"></i>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="stat-mini-card" style="border-left: 4px solid #16a34a;">
-                    <div>
-                        <div class="stat-mini-lbl" style="color: #15803d;">Telah Selesai</div>
-                        <div class="stat-mini-val" style="color: #15803d;">{{ $counts['resolved'] ?? 0 }}</div>
-                    </div>
-                    <i class="bi bi-check-circle text-success fs-3"></i>
-                </div>
-            </div>
-        </div>
 
         @if($tickets->count() > 0)
             <div class="row">
@@ -265,21 +177,21 @@
                             <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
                                 <div class="d-flex align-items-center gap-2">
                                     <span class="ticket-code">#TKT-{{ str_pad($ticket->id, 4, '0', STR_PAD_LEFT) }}</span>
-                                    <span class="badge-status status-{{ $ticket->status }}">
+                                    <span class="status-badge status-{{ $ticket->status }}">
                                         {{ strtoupper(str_replace('_', ' ', $ticket->status)) }}
                                     </span>
                                 </div>
-                                <span class="text-muted small">
+                                <span class="ticket-meta">
                                     <i class="bi bi-clock me-1"></i>{{ $ticket->created_at->format('d M Y, H:i') }}
                                 </span>
                             </div>
 
-                            <div class="ticket-subject mb-2">{{ $ticket->subject }}</div>
-                            <p class="text-muted small mb-3 text-truncate" style="max-width: 90%;">{{ $ticket->description }}</p>
+                            <div class="ticket-subject mb-1">{{ $ticket->subject }}</div>
+                            <p class="text-secondary small mb-2 text-truncate" style="max-width: 90%;">{{ $ticket->description }}</p>
 
-                            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                                <span class="badge-category"><i class="bi bi-tag me-1"></i>{{ $ticket->category }}</span>
-                                <span class="text-primary small fw-semibold d-inline-flex align-items-center gap-1" style="color: #ca8a04 !important;">
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top" style="border-color: var(--glass-border) !important;">
+                                <span class="ticket-meta"><i class="bi bi-tag me-1"></i>{{ $ticket->category }}</span>
+                                <span class="small fw-semibold text-primary d-inline-flex align-items-center gap-1">
                                     Lihat Diskusi <i class="bi bi-arrow-right"></i>
                                 </span>
                             </div>
@@ -295,14 +207,12 @@
             </div>
         @else
             <div class="col-lg-8 mx-auto">
-                <div class="empty-card">
-                    <div class="empty-card-icon">
-                        <i class="bi bi-shield-check"></i>
-                    </div>
-                    <h4 class="fw-bold text-dark mb-2">Semua Aman Terkendali</h4>
-                    <p class="text-muted small mb-4">Anda belum memiliki laporan kendala atau tiket bantuan yang aktif.</p>
-                    <a href="{{ route('tickets.create') }}" class="btn-create-ticket">
-                        <i class="bi bi-pencil-square me-1"></i> Buat Laporan Tiket Baru
+                <div class="empty-state">
+                    <i class="bi bi-shield-check"></i>
+                    <h5>Aman Terkendali</h5>
+                    <p>Anda belum memiliki laporan kendala atau tiket bantuan yang aktif.</p>
+                    <a href="{{ route('tickets.create') }}" class="btn btn-gradient">
+                        <i class="bi bi-plus-lg me-1"></i> Buat Tiket
                     </a>
                 </div>
             </div>

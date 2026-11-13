@@ -19,73 +19,67 @@
 
         body {
             min-height: 100vh;
-            background-color: #f8fafc;
-            color: #0f172a;
+            background: var(--nature-gradient, #f8fafc);
+            color: var(--text-main);
         }
 
         .add-card {
             width: 100%;
-            max-width: 500px;
-            padding: 2.5rem;
+            max-width: 480px;
+            padding: 2.25rem;
             border-radius: 24px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
 
         .card-icon {
-            width: 76px;
-            height: 76px;
-            background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
-            border: 2.5px solid #facc15;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            width: 72px;
+            height: 72px;
+            background: var(--glow-3);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.25rem;
-            color: #facc15;
+            margin: 0 auto 1.25rem;
+            font-size: 2.2rem;
+            color: var(--primary);
         }
 
         .card-title {
-            color: #0f172a;
-            font-weight: 800;
+            color: var(--text-main);
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
             font-size: 1.45rem;
-            letter-spacing: -0.3px;
         }
 
         .card-subtitle {
-            color: #64748b;
+            color: var(--text-secondary);
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             line-height: 1.5;
         }
 
         .form-label {
-            color: #0f172a;
-            font-weight: 700;
-            font-size: 0.88rem;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
             margin-bottom: 0.4rem;
         }
 
-        .form-label i {
-            color: #ca8a04;
-        }
-
         .form-control-token {
-            background: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            color: #0f172a;
-            border-radius: 14px;
-            padding: 0.9rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
             transition: all 0.25s ease;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
             letter-spacing: 2.5px;
             text-align: center;
@@ -94,26 +88,26 @@
 
         .form-control-token:focus {
             background: #ffffff;
-            border-color: #eab308;
-            color: #0f172a;
-            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 0 0 3px var(--glow-1);
         }
 
         .form-control-name {
-            background: #ffffff;
-            border: 1.5px solid #cbd5e1;
-            color: #0f172a;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
             border-radius: 12px;
-            padding: 0.8rem 1rem;
-            font-size: 0.95rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.92rem;
             transition: all 0.25s ease;
         }
 
         .form-control-name:focus {
             background: #ffffff;
-            border-color: #eab308;
-            color: #0f172a;
-            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 0 0 3px var(--glow-1);
         }
 
         .alert-danger-custom {
@@ -125,98 +119,94 @@
         }
 
         .alert-info-custom {
-            background: #fefce8;
-            border: 1px solid #fef08a;
-            color: #854d0e;
+            background: var(--glow-3);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
             border-radius: 12px;
             padding: 0.85rem 1rem;
         }
 
-        .btn-gradient-submit {
-            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-            border: 1px solid #eab308;
-            color: #000000 !important;
+        /* Buttons matching the rest of the application */
+        .btn-gradient {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
             padding: 0.85rem 1.5rem;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.35);
-        }
-
-        .btn-gradient-submit:hover {
-            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
-            color: #000000 !important;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(234, 179, 8, 0.45);
-        }
-
-        .btn-back-clean {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: #475569;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
             font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--glow-1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-gradient:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--glow-2);
+        }
+
+        .btn-action-custom {
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
             text-decoration: none;
-            transition: all 0.2s ease;
-            text-align: center;
+            border-radius: 50px;
+            background: #fff;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            width: 100%;
         }
 
-        .btn-back-clean:hover {
-            background: #f1f5f9;
-            color: #0f172a;
-            border-color: #94a3b8;
+        .btn-action-custom:hover {
+            background: var(--glow-1);
+            color: var(--primary-dark);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
-        /* ========= QR Scanner Buttons ========= */
-        .btn-outline-scan {
-            background: #fefce8;
-            border: 2px dashed #ca8a04;
-            color: #854d0e;
+        /* QR Scanner Buttons */
+        .btn-scan {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
             border-radius: 12px;
             padding: 0.75rem 1rem;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 600;
+            font-size: 0.88rem;
             transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
         }
 
-        .btn-outline-scan:hover {
-            background: #fef08a;
-            border-color: #eab308;
-            color: #713f12;
+        .btn-scan:hover {
+            background: #ffffff;
+            border-color: var(--primary);
+            color: var(--primary);
             transform: translateY(-1px);
         }
 
-        .btn-outline-scan.scanning {
+        .btn-scan.scanning {
             background: #fef2f2;
             border-color: #ef4444;
-            border-style: solid;
             color: #dc2626;
-        }
-
-        .btn-outline-scan-img {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            color: #475569;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: all 0.25s ease;
-        }
-
-        .btn-outline-scan-img:hover {
-            background: #f1f5f9;
-            border-color: #94a3b8;
-            color: #0f172a;
-            transform: translateY(-1px);
         }
 
         #qrReader {
             border-radius: 16px;
             overflow: hidden;
-            border: 2px solid #eab308;
+            border: 2px solid var(--primary);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
@@ -224,7 +214,6 @@
             border-radius: 14px;
         }
 
-        /* ========= Mobile Responsive ========= */
         @media (max-width: 576px) {
             .add-card {
                 padding: 1.75rem 1.25rem;
@@ -232,9 +221,9 @@
             }
 
             .card-icon {
-                width: 64px;
-                height: 64px;
-                font-size: 1.85rem;
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
                 border-radius: 16px;
                 margin-bottom: 1rem;
             }
@@ -262,7 +251,7 @@
             <div class="card-icon">
                 <i class="bi bi-qr-code-scan"></i>
             </div>
-            <h4 class="card-title">Tambah Perangkat IoT</h4>
+            <h4 class="card-title">Tambah Perangkat</h4>
             <p class="card-subtitle">Scan kartu QR perangkat atau masukkan 16 karakter token Tanikaya Anda.</p>
 
             @if ($errors->any())
@@ -280,10 +269,10 @@
 
                 <!-- Token Input -->
                 <div class="mb-3">
-                    <label class="form-label"><i class="bi bi-key-fill me-1"></i>Kode Token Perangkat</label>
+                    <label class="form-label"><i class="bi bi-key me-1"></i>Kode Token Perangkat</label>
                     <input type="text" class="form-control form-control-token" name="token" id="tokenInput" value="{{ old('token') }}"
                         placeholder="XXXXXXXXXXXXXXXX" maxlength="16" required autofocus autocomplete="off">
-                    <div class="form-text small text-muted mt-1 text-center">
+                    <div class="form-text small mt-1 text-center">
                         <i class="bi bi-info-circle me-1"></i>Token 16 karakter tercetak di kartu QR perangkat Tanikaya Anda.
                     </div>
                 </div>
@@ -291,10 +280,10 @@
                 <!-- QR Scanner Section -->
                 <div class="mb-4">
                     <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-outline-scan flex-grow-1" id="btnScanQR" onclick="toggleScanner()">
+                        <button type="button" class="btn btn-scan flex-grow-1" id="btnScanQR" onclick="toggleScanner()">
                             <i class="bi bi-camera me-1"></i>Scan Kamera
                         </button>
-                        <button type="button" class="btn btn-outline-scan-img flex-grow-1" onclick="document.getElementById('qrImageInput').click()">
+                        <button type="button" class="btn btn-scan flex-grow-1" onclick="document.getElementById('qrImageInput').click()">
                             <i class="bi bi-image me-1"></i>Pilih Foto QR
                         </button>
                         <input type="file" id="qrImageInput" accept="image/*" style="display:none" onchange="scanFromImage(this)">
@@ -316,10 +305,10 @@
 
                 <!-- Custom Name -->
                 <div class="mb-4">
-                    <label class="form-label"><i class="bi bi-tag-fill me-1"></i>Nama Label Perangkat (Opsional)</label>
+                    <label class="form-label"><i class="bi bi-tag me-1"></i>Nama Label Perangkat (Opsional)</label>
                     <input type="text" class="form-control form-control-name" name="custom_name"
                         value="{{ old('custom_name') }}" placeholder="Contoh: Mesin Dryer Blok 1, Greenhouse B">
-                    <div class="form-text small text-muted mt-1">
+                    <div class="form-text small mt-1">
                         Beri nama alias agar mudah dikenali di dasbor monitoring Anda.
                     </div>
                 </div>
@@ -331,10 +320,10 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-gradient-submit">
-                        <i class="bi bi-plus-circle-fill me-2"></i>Hubungkan Perangkat
+                    <button type="submit" class="btn btn-gradient">
+                        <i class="bi bi-plus-circle me-1"></i>Hubungkan Perangkat
                     </button>
-                    <a href="{{ route('monitoring.index') }}" class="btn btn-back-clean">
+                    <a href="{{ route('monitoring.index') }}" class="btn btn-action-custom">
                         <i class="bi bi-arrow-left me-1"></i> Kembali ke Dasbor
                     </a>
                 </div>

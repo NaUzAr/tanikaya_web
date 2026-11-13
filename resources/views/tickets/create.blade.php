@@ -16,97 +16,96 @@
         }
 
         body {
-            background-color: #f8fafc;
-            color: #0f172a;
+            background: var(--nature-gradient, #f8fafc);
+            color: var(--text-main);
             min-height: 100vh;
         }
 
-        .form-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 24px;
-            padding: 2.25rem;
-            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.04);
-        }
-
         .page-title {
-            color: #0f172a;
+            color: var(--text-main);
             font-weight: 800;
-            font-size: 1.6rem;
-            letter-spacing: -0.4px;
+            font-size: 1.75rem;
+            margin-bottom: 0.25rem;
         }
 
-        .page-title-icon {
-            color: #eab308;
-            margin-right: 0.5rem;
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            color: var(--text-main);
         }
 
         .form-label {
-            color: #0f172a;
-            font-weight: 700;
-            font-size: 0.88rem;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
             margin-bottom: 0.4rem;
         }
 
-        .form-label i {
-            color: #ca8a04;
-        }
-
         .form-control, .form-select {
-            background: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            color: #0f172a;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
             border-radius: 12px;
-            padding: 0.8rem 1rem;
-            font-size: 0.95rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.92rem;
             transition: all 0.25s ease;
         }
 
         .form-control:focus, .form-select:focus {
             background: #ffffff;
-            border-color: #eab308;
-            color: #0f172a;
-            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 0 0 3px var(--glow-1);
         }
 
-        .btn-submit-ticket {
-            background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-            border: 1px solid #eab308;
-            color: #000000 !important;
+        .btn-gradient {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
             padding: 0.85rem 1.5rem;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.35);
-        }
-
-        .btn-submit-ticket:hover {
-            background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(234, 179, 8, 0.45);
-            color: #000000 !important;
-        }
-
-        .btn-back-clean {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: #475569;
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--glow-1);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-gradient:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--glow-2);
+        }
+
+        .btn-back {
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             font-size: 0.88rem;
         }
 
-        .btn-back-clean:hover {
-            background: #f1f5f9;
-            color: #0f172a;
-            border-color: #94a3b8;
+        .btn-back:hover {
+            background: var(--glow-1);
+            color: var(--primary-dark);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -122,12 +121,12 @@
                 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                     <div>
                         <h2 class="page-title mb-1">
-                            <i class="bi bi-pencil-square page-title-icon"></i>Buat Tiket Laporan Baru
+                            <i class="bi bi-pencil-square me-2 text-primary"></i>Buat Tiket Laporan
                         </h2>
-                        <p class="text-muted small mb-0">Sampaikan kendala teknis atau pertanyaan Anda kepada Tim Tanikaya.</p>
+                        <p class="text-secondary small mb-0">Sampaikan kendala teknis atau pertanyaan Anda kepada tim dukungan.</p>
                     </div>
-                    <a href="{{ route('tickets.index') }}" class="btn-back-clean">
-                        <i class="bi bi-arrow-left"></i> Kembali ke Daftar
+                    <a href="{{ route('tickets.index') }}" class="btn-back">
+                        <i class="bi bi-arrow-left"></i> Kembali
                     </a>
                 </div>
 
@@ -143,20 +142,20 @@
                     </div>
                 @endif
 
-                <div class="form-card">
+                <div class="glass-card">
                     <form action="{{ route('tickets.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Subjek -->
                         <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-chat-text-fill me-1"></i>Subjek Laporan</label>
+                            <label class="form-label"><i class="bi bi-chat-text me-1"></i>Subjek Laporan</label>
                             <input type="text" name="subject" class="form-control" value="{{ old('subject') }}" required placeholder="Contoh: Sensor Suhu Tidak Mengirim Data, Pompa Irigasi Offline">
-                            <div class="form-text small text-muted">Ringkasan singkat kendala yang dialami.</div>
+                            <div class="form-text small text-secondary">Ringkasan singkat kendala yang dialami.</div>
                         </div>
 
                         <!-- Kategori -->
                         <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-grid-fill me-1"></i>Kategori Kendala</label>
+                            <label class="form-label"><i class="bi bi-grid me-1"></i>Kategori Kendala</label>
                             <select name="category" class="form-select" id="categorySelect" required onchange="checkCategory()">
                                 <option value="" disabled {{ old('category') ? '' : 'selected' }}>Pilih Kategori Kendala</option>
                                 <option value="Perangkat Hardware / IoT" {{ old('category') == 'Perangkat Hardware / IoT' ? 'selected' : '' }}>Perangkat Hardware / Sensor IoT</option>
@@ -178,12 +177,12 @@
                         <div class="mb-4">
                             <label class="form-label"><i class="bi bi-paperclip me-1"></i>Lampiran Foto / Screenshot (Opsional)</label>
                             <input type="file" name="attachment" class="form-control" accept="image/jpeg,image/png,image/jpg">
-                            <div class="form-text small text-muted">Maksimal 2MB. Format file: JPG, JPEG, PNG.</div>
+                            <div class="form-text small text-secondary">Maksimal 2MB. Format file: JPG, JPEG, PNG.</div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-submit-ticket">
-                                <i class="bi bi-send-fill me-2"></i>Kirim Laporan Tiket
+                            <button type="submit" class="btn btn-gradient">
+                                <i class="bi bi-send me-1"></i>Kirim Laporan Tiket
                             </button>
                         </div>
                     </form>
