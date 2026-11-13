@@ -868,7 +868,7 @@
 
                         <!-- Footer -->
                         <div class="qris-footer">
-                            <span><i class="bi bi-shield-check text-warning me-1"></i>Scan via kamera aplikasi Swaratani</span>
+                            <span><i class="bi bi-shield-check text-warning me-1"></i>Scan via kamera aplikasi Tanikaya</span>
                         </div>
                     </div>
 

@@ -275,7 +275,7 @@
     </div>
 
     <footer class="page-footer">
-        <p>© 2026 Swaratani IoT &bull; Tim Engineering Pertanian</p>
+        <p>© {{ date('Y') }} Tanikaya IoT &bull; Tim Engineering Pertanian</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

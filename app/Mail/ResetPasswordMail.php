@@ -26,7 +26,7 @@ class ResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Password - Swaratani IoT',
+            subject: 'Reset Password - ' . config('app.name', 'Tanikaya') . ' IoT',
         );
     }
 

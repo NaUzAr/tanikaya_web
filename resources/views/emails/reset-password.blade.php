@@ -71,7 +71,7 @@
 <body>
     <div class="card">
         <div class="logo">
-            <h2>🌱 Swaratani IoT</h2>
+            <h2>🌱 {{ config('app.name', 'Tanikaya') }} IoT</h2>
         </div>
         <h3>Reset Password</h3>
         <p>Halo <strong>{{ $username }}</strong>,</p>
@@ -90,7 +90,7 @@
         </div>
 
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Swaratani IoT &bull; Tim Engineering Pertanian</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Tanikaya') }} IoT &bull; Tim Engineering Pertanian</p>
         </div>
     </div>
 </body>

@@ -69,11 +69,11 @@
 <body>
     <div class="card">
         <div class="logo">
-            <h2>🌱 Swaratani IoT</h2>
+            <h2>🌱 {{ config('app.name', 'Tanikaya') }} IoT</h2>
         </div>
         <h3>Konfirmasi Pendaftaran</h3>
         <p>Halo,</p>
-        <p>Terima kasih telah mendaftar di Swaratani IoT. Silakan klik tombol di bawah ini untuk memverifikasi alamat
+        <p>Terima kasih telah mendaftar di {{ config('app.name', 'Tanikaya') }} IoT. Silakan klik tombol di bawah ini untuk memverifikasi alamat
             email Anda dan mengaktifkan akun Anda:</p>
 
         <div style="text-align: center;">
@@ -82,7 +82,7 @@
             </a>
         </div>
 
-        <p>Jika Anda tidak mendaftar akun di Swaratani IoT, Anda bisa mengabaikan email ini.</p>
+        <p>Jika Anda tidak mendaftar akun di {{ config('app.name', 'Tanikaya') }} IoT, Anda bisa mengabaikan email ini.</p>
 
         <div class="sub-text">
             *Jika Anda kesulitan mengklik tombol "Verifikasi Email", copy dan paste URL berikut ke browser web Anda:
@@ -91,7 +91,7 @@
         </div>
 
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Swaratani IoT &bull; Tim Engineering Pertanian</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Tanikaya') }} IoT &bull; Tim Engineering Pertanian</p>
         </div>
     </div>
 </body>

@@ -90,14 +90,14 @@
             "sizes": "1280x720",
             "type": "image/png",
             "form_factor": "wide",
-            "label": "Dashboard Monitoring Swaratani IoT"
+            "label": "Dashboard Monitoring Tanikaya IoT"
         },
         {
             "src": "/icons/screenshot-narrow.png",
             "sizes": "720x1280",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "Mobile View Swaratani IoT"
+            "label": "Mobile View Tanikaya IoT"
         }
     ],
     "shortcuts": [
