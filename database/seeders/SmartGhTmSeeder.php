@@ -28,6 +28,7 @@ class SmartGhTmSeeder extends Seeder
             ['name' => 'Smart GH TM 3', 'topic' => '/smartgh_tm_03'],
             ['name' => 'Smart GH TM 4', 'topic' => '/smartgh_tm_04'],
             ['name' => 'Smart GH TM 5', 'topic' => '/smartgh_tm_05'],
+            ['name' => 'Smart GH KT 1', 'topic' => '/smartgh_kt_01'],
         ];
 
         $sensorsData = [
@@ -181,3 +182,4 @@ class SmartGhTmSeeder extends Seeder
         $this->command->info("Semua 5 device Smart GH TM berhasil dibuat!");
     }
 }
+
