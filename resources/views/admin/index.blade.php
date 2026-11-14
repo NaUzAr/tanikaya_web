@@ -833,7 +833,6 @@
                                 <div class="qris-header-text">
                                     <div class="qris-brand-title">{{ strtoupper(config('app.name', 'Tanikaya')) }}</div>
                                     <div class="qris-sub">
-                                        <span class="qris-sub-badge">IoT</span>
                                         <span>Best Solution for <span class="qris-sub-highlight">Agriculture Machinery</span></span>
                                     </div>
                                 </div>
