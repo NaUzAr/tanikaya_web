@@ -65,7 +65,7 @@ class AdminSensorRuleController extends Controller
         }
 
         $firebase = app(\App\Services\FirebaseService::class);
-        $title = "🔔 Test Swaratani FCM";
+        $title = "🔔 Test Tanikaya FCM";
         $body = "Hore! Sistem notifikasi ke HP Anda dari server Laravel bekerja dengan sangat sempurna!";
         
         $success = $firebase->sendToToken($user->fcm_token, $title, $body);
