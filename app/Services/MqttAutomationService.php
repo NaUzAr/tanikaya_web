@@ -45,6 +45,7 @@ class MqttAutomationService
                 'timestamp' => now()->toIso8601String(),
             ]);
 
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
@@ -84,6 +85,7 @@ class MqttAutomationService
                 'timestamp' => now()->toIso8601String(),
             ]);
 
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
@@ -120,6 +122,7 @@ class MqttAutomationService
                 'timestamp' => now()->toIso8601String(),
             ]);
 
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
@@ -147,21 +150,22 @@ class MqttAutomationService
             // Determine format based on keys
             if (isset($settings['ats_tds']) && isset($settings['bwh_tds'])) {
                 // Fertilizer (TDS): <PPKAUT#ats#bwh#>
-                $message = "<PPKAUT#" . $settings['ats_tds'] . "#" . $settings['bwh_tds'] . "#>";
+                $message = "CMD:<PPKAUT#" . $settings['ats_tds'] . "#" . $settings['bwh_tds'] . "#>";
             } elseif (isset($settings['ats_ph']) && isset($settings['bwh_ph'])) {
                 // pH: <PPKPH#ats#bwh#>
-                $message = "<PPKPH#" . $settings['ats_ph'] . "#" . $settings['bwh_ph'] . "#>";
+                $message = "CMD:<PPKPH#" . $settings['ats_ph'] . "#" . $settings['bwh_ph'] . "#>";
             } elseif (isset($settings['ats_suhu']) && isset($settings['bwh_suhu'])) {
                 // Fan (Temperature): <SUH#ats#bwh#>
-                $message = "<SUH#" . $settings['ats_suhu'] . "#" . $settings['bwh_suhu'] . "#>";
+                $message = "CMD:<SUH#" . $settings['ats_suhu'] . "#" . $settings['bwh_suhu'] . "#>";
             } elseif (isset($settings['ats_kelem']) && isset($settings['bwh_kelem'])) {
                 // Misting (Humidity): <KEL#ats#bwh#>
-                $message = "<KEL#" . $settings['ats_kelem'] . "#" . $settings['bwh_kelem'] . "#>";
+                $message = "CMD:<KEL#" . $settings['ats_kelem'] . "#" . $settings['bwh_kelem'] . "#>";
             } else {
                 Log::warning("Unknown automation setting keys: " . json_encode(array_keys($settings)));
                 return false;
             }
 
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
@@ -231,6 +235,7 @@ class MqttAutomationService
                 $message = sprintf('<%s#%s#>', $outputName, $val);
             }
 
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 

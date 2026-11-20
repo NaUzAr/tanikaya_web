@@ -144,6 +144,7 @@ class Device extends Model
             'aws' => 'AWS (Automatic Weather Station)',
             'smart_gh' => 'Smart GH (Smart Greenhouse)',
             'smart_gh_v2' => 'Smart GH V2',
+            'smart_gh_v3' => 'Smart GH V3 (Irigasi & Nutrisi)',
             'smart_farm' => 'Smart Farm (Irigasi Multi-Zona)',
             // Tambahkan tipe baru di sini:
             // 'water_quality' => 'Water Quality Sensor',
@@ -216,6 +217,14 @@ class Device extends Model
                 'ni_TDS' => 1,
                 'ni_LUX' => 1,
                 'co2' => 1,
+            ],
+            'smart_gh_v3' => [
+                'ni_SUHU' => 1,
+                'ni_KELEM' => 1,
+                'ni_LUX' => 1,
+                'ni_EC' => 1,
+                'ni_TDS' => 1,
+                'ni_PH' => 1,
             ],
             'smart_farm' => [
                 // Tanpa sensor — hanya relay kontrol irigasi
@@ -335,6 +344,22 @@ class Device extends Model
                 'sts_sld_op' => 1,
                 'sts_sld_tu' => 1,
                 'sts_cool' => 1,
+            ],
+            'smart_gh_v3' => [
+                'fan' => 1,
+                'sts_misting' => 1,
+                'sts_lampu' => 1,
+                'sts_cool' => 1,
+                'sts_sld_op' => 1,
+                'sts_sld_tu' => 1,
+                'sts_air_input' => 1,
+                'sts_mixing' => 1,
+                'sts_dosing' => 1,
+                'sts_ph_up' => 1,
+                'sts_ph_down' => 1,
+                'irrigation_pump' => 1,
+                'sts_air_baku' => 1,
+                'sts_air_pupuk' => 1,
             ],
             'smart_farm' => [
                 'sf_pompa' => 1,

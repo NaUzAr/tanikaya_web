@@ -23,12 +23,12 @@ class SmartGhTmSeeder extends Seeder
     public function run(): void
     {
         $deviceConfigs = [
-            ['name' => 'Smart GH TM 1', 'topic' => '/smartgh_tm_01'],
-            ['name' => 'Smart GH TM 2', 'topic' => '/smartgh_tm_02'],
-            ['name' => 'Smart GH TM 3', 'topic' => '/smartgh_tm_03'],
-            ['name' => 'Smart GH TM 4', 'topic' => '/smartgh_tm_04'],
-            ['name' => 'Smart GH TM 5', 'topic' => '/smartgh_tm_05'],
-            ['name' => 'Smart GH KT 1', 'topic' => '/smartgh_kt_01'],
+            ['name' => 'Smart GH TM 1', 'topic' => '/Smart_GH_TM_1'],
+            ['name' => 'Smart GH TM 2', 'topic' => '/Smart_GH_TM_2'],
+            ['name' => 'Smart GH TM 3', 'topic' => '/Smart_GH_TM_3'],
+            ['name' => 'Smart GH TM 4', 'topic' => '/Smart_GH_TM_4'],
+            ['name' => 'Smart GH TM 5', 'topic' => '/Smart_GH_TM_5'],
+            ['name' => 'Smart GH KT 1', 'topic' => '/Smart_GH_KT_1'],
         ];
 
         $sensorsData = [
@@ -78,7 +78,7 @@ class SmartGhTmSeeder extends Seeder
 
                 $device = Device::create([
                     'name' => $cfg['name'],
-                    'type' => 'smart_gh',
+                    'type' => 'smart_gh_v3',
                     'mqtt_topic' => $cfg['topic'],
                     'token' => $token,
                     'table_name' => $tableName,
@@ -88,8 +88,12 @@ class SmartGhTmSeeder extends Seeder
 
                 $this->command->info("Created device: {$cfg['name']} (Token: {$token})");
             } else {
+                $device->update([
+                    'mqtt_topic' => $cfg['topic'],
+                    'type' => 'smart_gh_v3',
+                ]);
                 $tableName = $device->table_name;
-                $this->command->info("Device already exists: {$cfg['name']} (Token: {$device->token})");
+                $this->command->info("Device updated: {$cfg['name']} (Topic: {$cfg['topic']}, Type: smart_gh_v3)");
             }
 
             // 1. Buat tabel log telemetri jika belum ada

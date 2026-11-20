@@ -103,14 +103,16 @@ class MqttListener extends Command
                     $this->warn("⚠️  No devices found. Waiting for devices...");
                 } else {
                     foreach ($devices as $device) {
-                        $topicsToSubscribe = [];
-                        $topicsToSubscribe[] = rtrim($device->mqtt_topic, '/') . '/pub';
-                        if (!empty($device->mqtt_topic_status)) {
+                        $base = rtrim($device->mqtt_topic, '/');
+                        $topicsToSubscribe = [
+                            $base . '/pub',
+                            $base . '/status',
+                            $base . '/log',
+                            $base . '/jaringan',
+                            $base . '/cuaca',
+                        ];
+                        if (!empty($device->mqtt_topic_status) && !in_array($device->mqtt_topic_status, $topicsToSubscribe)) {
                             $topicsToSubscribe[] = rtrim($device->mqtt_topic_status, '/');
-                        } elseif ($device->type === 'smart_farm') {
-                            // Smart Farm: auto-subscribe ke {base}/status & {base}/log
-                            $topicsToSubscribe[] = rtrim($device->mqtt_topic, '/') . '/status';
-                            $topicsToSubscribe[] = rtrim($device->mqtt_topic, '/') . '/log';
                         }
 
                         foreach ($topicsToSubscribe as $subTopic) {
@@ -147,15 +149,17 @@ class MqttListener extends Command
                                 $currentDevices = \App\Models\Device::all();
 
                                 foreach ($currentDevices as $device) {
-                                    $topicsToSubscribe = [];
-                                    $topicsToSubscribe[] = rtrim($device->mqtt_topic, '/') . '/pub';
-                                    if (!empty($device->mqtt_topic_status)) {
+                                    $base = rtrim($device->mqtt_topic, '/');
+                                    $topicsToSubscribe = [
+                                        $base . '/pub',
+                                        $base . '/status',
+                                        $base . '/log',
+                                        $base . '/jaringan',
+                                        $base . '/cuaca',
+                                    ];
+                                    if (!empty($device->mqtt_topic_status) && !in_array($device->mqtt_topic_status, $topicsToSubscribe)) {
                                         $topicsToSubscribe[] = rtrim($device->mqtt_topic_status, '/');
-                                    } elseif ($device->type === 'smart_farm') {
-                                        $topicsToSubscribe[] = rtrim($device->mqtt_topic, '/') . '/status';
-                                        $topicsToSubscribe[] = rtrim($device->mqtt_topic, '/') . '/log';
                                     }
-
                                     foreach ($topicsToSubscribe as $subTopic) {
                                         if (!in_array($subTopic, $subscribedTopics)) {
                                             $this->info("🆕 New device detected dynamically! Subscribing to: {$subTopic} (Device: {$device->name})");
@@ -219,9 +223,37 @@ class MqttListener extends Command
         $this->line("           Raw: {$message}");
 
         try {
-            // === SMART FARM PROTOCOL: EVT:, OK:, ERR: ===
-            // Deteksi sebelum coba parse JSON
             $trimmed = trim($message);
+
+            // 1. Status online/offline di topik status (Retained Last Will dari ESP32)
+            if (str_ends_with($topic, '/status') && ($trimmed === 'ONLINE' || $trimmed === 'OFFLINE')) {
+                $this->processConnectionStatus($topic, $trimmed);
+                return;
+            }
+
+            // 2. Paket Smart GH V3 / IoT: EVT:DATA:{...} atau EVT:STATUS:{...}
+            if (str_starts_with($trimmed, 'EVT:DATA:') || (str_starts_with($trimmed, 'EVT:STATUS:') && str_contains($trimmed, '{'))) {
+                $jsonStart = strpos($trimmed, '{');
+                if ($jsonStart !== false) {
+                    $jsonPayload = substr($trimmed, $jsonStart);
+                    $this->processJsonPayload($topic, $jsonPayload);
+                    return;
+                }
+            }
+
+            // 3. Catatan kegiatan: LOG:<KATEGORI>:<waktu>:<teks>
+            if (str_starts_with($trimmed, 'LOG:')) {
+                $this->processLogMessage($topic, $trimmed);
+                return;
+            }
+
+            // 4. Balasan perintah (OK:..., ERR:...)
+            if (str_starts_with($trimmed, 'OK:CMD:') || str_starts_with($trimmed, 'ERR:') || $trimmed === 'EVT:PONG') {
+                $this->info("           📩 Response: {$trimmed}");
+                return;
+            }
+
+            // 5. Smart Farm legacy protocol (colon-separated, misal STATUS:0:1:NONE... atau EVT:AUTO_OFF)
             if (
                 str_starts_with($trimmed, 'EVT:') ||
                 str_starts_with($trimmed, 'OK:') ||
@@ -297,12 +329,14 @@ class MqttListener extends Command
         // Cari device berdasarkan topic ATAU token
         // Topic yang diterima: {mqtt_topic}/pub atau {mqtt_topic}/status, tapi di DB hanya {mqtt_topic}
         // Normalisasi: strip suffix /pub atau /status, dan coba dengan/tanpa leading slash
-        $baseTopic = preg_replace('/\/(pub|status|log)$/', '', $topic);
+        $baseTopic = preg_replace('/\/(pub|status|log|jaringan|cuaca)$/', '', $topic);
         $baseTopicAlt = ltrim($baseTopic, '/'); // versi tanpa leading slash
         $device = Device::where('mqtt_topic', $baseTopic)
             ->orWhere('mqtt_topic', $baseTopicAlt)
             ->orWhere('mqtt_topic', $topic)
             ->orWhere('mqtt_topic_status', $topic)
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopic)])
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopicAlt)])
             ->first();
 
         if (!$device && isset($data['token'])) {
@@ -821,11 +855,13 @@ class MqttListener extends Command
     {
         // Cari device berdasarkan topic (strip /pub atau /status suffix)
         // Normalisasi: coba dengan/tanpa leading slash
-        $baseTopic = preg_replace('/\/(pub|status|log)$/', '', $topic);
+        $baseTopic = preg_replace('/\/(pub|status|log|jaringan|cuaca)$/', '', $topic);
         $baseTopicAlt = ltrim($baseTopic, '/'); // versi tanpa leading slash
         $device = Device::where('mqtt_topic', $baseTopic)
             ->orWhere('mqtt_topic', $baseTopicAlt)
             ->orWhere('mqtt_topic', $topic)
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopic)])
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopicAlt)])
             ->first();
 
         if (!$device) {
@@ -1428,6 +1464,56 @@ class MqttListener extends Command
         } else {
             $this->error("           ❌ Gagal mengirim Auto-Sync RTC ke topik {$topic}");
             return null;
+        }
+    }
+    /**
+     * Process connection status (ONLINE / OFFLINE from /status topic)
+     */
+    private function processConnectionStatus(string $topic, string $status): void
+    {
+        $baseTopic = preg_replace('/\/(pub|status|log|jaringan|cuaca)$/', '', $topic);
+        $baseTopicAlt = ltrim($baseTopic, '/');
+        $device = Device::where('mqtt_topic', $baseTopic)
+            ->orWhere('mqtt_topic', $baseTopicAlt)
+            ->orWhere('mqtt_topic', $topic)
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopic)])
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopicAlt)])
+            ->first();
+
+        if (!$device) {
+            return;
+        }
+
+        if ($status === 'ONLINE') {
+            $this->info("           🟢 Device status: ONLINE ({$device->name})");
+            \Cache::put("device_{$device->id}_last_seen", now()->toIso8601String(), now()->addHours(1));
+            $this->updateDeviceLastSeenDb($device);
+        } else {
+            $this->warn("           🔴 Device status: OFFLINE ({$device->name})");
+            \Cache::forget("device_{$device->id}_last_seen");
+        }
+
+        $buffer = \Cache::get("sensor_buffer_{$device->id}", []);
+        $lastSeen = \Cache::get("device_{$device->id}_last_seen");
+        event(new \App\Events\DeviceStatusUpdated($device->id, $buffer, [], $lastSeen));
+    }
+
+    /**
+     * Process activity log message (LOG:<KATEGORI>:<waktu>:<teks>)
+     */
+    private function processLogMessage(string $topic, string $logMessage): void
+    {
+        $this->info("           📜 Log: {$logMessage}");
+        $baseTopic = preg_replace('/\/(pub|status|log|jaringan|cuaca)$/', '', $topic);
+        $baseTopicAlt = ltrim($baseTopic, '/');
+        $device = Device::where('mqtt_topic', $baseTopic)
+            ->orWhere('mqtt_topic', $baseTopicAlt)
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopic)])
+            ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopicAlt)])
+            ->first();
+
+        if ($device) {
+            \Log::info("Device [{$device->name}] Log: {$logMessage}");
         }
     }
 }

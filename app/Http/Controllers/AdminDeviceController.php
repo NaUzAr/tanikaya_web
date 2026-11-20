@@ -1008,6 +1008,7 @@ class AdminDeviceController extends Controller
 
                 $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-admin-control-' . uniqid());
                 $mqtt->connect($connectionSettings, true);
+                if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
                 $mqtt->publish($topic, $message, 1);
                 $mqtt->disconnect();
 
@@ -1081,7 +1082,8 @@ class AdminDeviceController extends Controller
 
             $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-admin-dosing-' . uniqid());
             $mqtt->connect($connectionSettings, true);
-            $mqtt->publish($topic, $message, 1);
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
+                $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
             \Log::info("MQTT Admin Dosing by Volume sent", [
@@ -1156,7 +1158,8 @@ class AdminDeviceController extends Controller
 
             $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-admin-pump-' . uniqid());
             $mqtt->connect($connectionSettings, true);
-            $mqtt->publish($topic, $message, 1);
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
+                $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
             \Log::info("MQTT Admin Pump Control sent", ['topic' => $topic, 'message' => $message]);
@@ -1220,7 +1223,8 @@ class AdminDeviceController extends Controller
 
             $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-admin-irrigation-' . uniqid());
             $mqtt->connect($connectionSettings, true);
-            $mqtt->publish($topic, $message, 1);
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
+                $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
             \Log::info("MQTT Admin Irrigation Pump Control sent", [

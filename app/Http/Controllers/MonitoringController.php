@@ -606,6 +606,7 @@ class MonitoringController extends Controller
 
                 $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-control-' . uniqid());
                 $mqtt->connect($connectionSettings, true);
+                if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
                 $mqtt->publish($topic, $message, 1);
                 $mqtt->disconnect();
 
@@ -678,7 +679,8 @@ class MonitoringController extends Controller
 
             $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-pump-' . uniqid());
             $mqtt->connect($connectionSettings, true);
-            $mqtt->publish($topic, $message, 1);
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
+                $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
             \Log::info("MQTT Pump Control sent", ['topic' => $topic, 'message' => $message]);
@@ -758,7 +760,8 @@ class MonitoringController extends Controller
 
             $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-irrigation-' . uniqid());
             $mqtt->connect($connectionSettings, true);
-            $mqtt->publish($topic, $message, 1);
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
+                $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
             \Log::info("MQTT Irrigation Pump Control sent", [
@@ -856,7 +859,8 @@ class MonitoringController extends Controller
 
             $mqtt = new \PhpMqtt\Client\MqttClient($host, $port, 'laravel-dosing-' . uniqid());
             $mqtt->connect($connectionSettings, true);
-            $mqtt->publish($topic, $message, 1);
+            if (!str_starts_with($message, 'CMD:')) { $message = 'CMD:' . $message; }
+                $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
             \Log::info("MQTT Dosing by Volume sent", [

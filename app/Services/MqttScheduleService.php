@@ -118,7 +118,7 @@ class MqttScheduleService
 
             // Build message: <sch{id}#{hour}#{minute}#{duration}#{sector}#{type}#{days}>
             $message = sprintf(
-                '<sch%d#%d#%d#%d#%d#%d#%s>',
+                'CMD:<sch%d#%02d#%02d#%d#%d#%d#%s#>',
                 $schedule['id'],
                 $hour,
                 $minute,
@@ -160,7 +160,7 @@ class MqttScheduleService
             $topic = rtrim($mqttTopic, '/') . '/sub';
 
             // Format specific request: <sch{id}#70#70#0#0#2#>
-            $message = sprintf('<sch%d#70#70#0#0#2#>', $slotId);
+            $message = sprintf('CMD:<sch%d#70#70#0#0#2#>', $slotId);
 
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();

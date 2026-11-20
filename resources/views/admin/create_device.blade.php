@@ -335,7 +335,7 @@
                                             <div class="type-card" data-type="{{ $typeKey }}"
                                                 onclick="selectDeviceType('{{ $typeKey }}')">
                                                 <i
-                                                    class="bi {{ $typeKey === 'aws' ? 'bi-cloud-sun-fill' : 'bi-flower1' }}"></i>
+                                                    class="bi {{ $typeKey === 'aws' ? 'bi-cloud-sun-fill' : ($typeKey === 'smart_gh_v3' ? 'bi-droplet-half' : ($typeKey === 'smart_farm' ? 'bi-grid-3x3-gap-fill' : 'bi-flower1')) }}"></i>
                                                 <h6>{{ $typeLabel }}</h6>
                                             </div>
                                         </div>
@@ -849,6 +849,29 @@
             document.querySelector(`[data-type="${type}"]`).classList.add('selected');
             document.getElementById('deviceType').value = type;
 
+            const topicInput = document.querySelector('input[name="mqtt_topic"]');
+            if (type === 'smart_gh_v3') {
+                if (topicInput) {
+                    topicInput.placeholder = 'Contoh: /Smart_GH_TM_1';
+                    if (!topicInput.value || topicInput.value.startsWith('/smartgh_') || topicInput.value === 'sensor/kebun/data') {
+                        topicInput.value = '/Smart_GH_TM_1';
+                    }
+                }
+                const scheduleSelect = document.getElementById('scheduleType');
+                if (scheduleSelect && !scheduleSelect.value) {
+                    scheduleSelect.value = 'time_days_duration_sector_type';
+                    toggleScheduleOptions('time_days_duration_sector_type');
+                    const slotsInput = document.querySelector('input[name="max_slots"]');
+                    if (slotsInput) slotsInput.value = '14';
+                    const sectorsInput = document.querySelector('input[name="max_sectors"]');
+                    if (sectorsInput) sectorsInput.value = '2';
+                }
+            } else {
+                if (topicInput && topicInput.placeholder.includes('Smart_GH_TM')) {
+                    topicInput.placeholder = 'Contoh: sensor/kebun/data';
+                }
+            }
+
 
 
 
@@ -883,6 +906,21 @@
             if (!type) { e.preventDefault(); alert('Pilih tipe alat terlebih dahulu!'); return false; }
             if (type !== 'smart_farm' && sensors === 0) { e.preventDefault(); alert('Tambahkan minimal 1 sensor!'); return false; }
         });
+
+        // Auto format MQTT topic based on device name for smart_gh_v3
+        const nameInput = document.querySelector('input[name="name"]');
+        if (nameInput) {
+            nameInput.addEventListener('input', function () {
+                const type = document.getElementById('deviceType').value;
+                if (type === 'smart_gh_v3') {
+                    const topicInput = document.querySelector('input[name="mqtt_topic"]');
+                    const match = this.value.match(/TM\s*(\d+)/i);
+                    if (match && topicInput && (topicInput.value === '' || topicInput.value.startsWith('/Smart_GH_TM_'))) {
+                        topicInput.value = '/Smart_GH_TM_' + match[1];
+                    }
+                }
+            });
+        }
     </script>
 
 
