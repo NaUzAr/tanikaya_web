@@ -39,8 +39,12 @@ class DeviceScheduleData extends Model
      */
     public static function parseFromDevice(string $raw): array
     {
-        // Empty schedule check
-        if (str_starts_with($raw, '_:_') || empty(trim($raw))) {
+        $rawTrim = trim($raw);
+        // Empty schedule check (misal: _:_, --:--, kosong, atau kosong)
+        if (str_starts_with($rawTrim, '_:_') || 
+            str_starts_with($rawTrim, '--') || 
+            str_contains(strtolower($rawTrim), 'kosong') || 
+            empty($rawTrim)) {
             return [
                 'is_active' => false,
                 'on_time' => null,
@@ -64,7 +68,7 @@ class DeviceScheduleData extends Model
         ];
 
         // Split by first occurrence of double space to separate name from days
-        $parts = preg_split('/\s{2,}/', $raw, 2);
+        $parts = preg_split('/\s{2,}/', $rawTrim, 2);
 
         if (count($parts) >= 2) {
             // Parse days from second part
@@ -82,6 +86,8 @@ class DeviceScheduleData extends Model
             // Time (HH:MM)
             if (preg_match('/^\d{1,2}:\d{2}$/', $segments[0])) {
                 $result['on_time'] = $segments[0] . ':00'; // Add seconds for TIME format
+            } else {
+                $result['is_active'] = false;
             }
 
             // Duration
@@ -92,6 +98,8 @@ class DeviceScheduleData extends Model
 
             // Name
             $result['name'] = trim($segments[3] ?? '');
+        } else {
+            $result['is_active'] = false;
         }
 
         return $result;

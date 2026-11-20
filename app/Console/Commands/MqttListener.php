@@ -247,9 +247,26 @@ class MqttListener extends Command
                 return;
             }
 
-            // 4. Balasan perintah (OK:..., ERR:...)
-            if (str_starts_with($trimmed, 'OK:CMD:') || str_starts_with($trimmed, 'ERR:') || $trimmed === 'EVT:PONG') {
+            // 4. Balasan perintah (OK:..., ERR:..., EVT:PONG)
+            if (str_starts_with($trimmed, 'OK:CMD:') || str_starts_with($trimmed, 'OK:STATUS') || str_starts_with($trimmed, 'ERR:') || $trimmed === 'EVT:PONG') {
                 $this->info("           📩 Response: {$trimmed}");
+
+                $baseTopic = preg_replace('/\/(pub|status|log|jaringan|cuaca)$/', '', $topic);
+                $baseTopicAlt = ltrim($baseTopic, '/');
+                $device = Device::where('mqtt_topic', $baseTopic)
+                    ->orWhere('mqtt_topic', $baseTopicAlt)
+                    ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopic)])
+                    ->orWhereRaw('LOWER(mqtt_topic) = ?', [strtolower($baseTopicAlt)])
+                    ->first();
+
+                if ($device) {
+                    \Cache::put("device_{$device->id}_last_cmd_response", [
+                        'response' => $trimmed,
+                        'received_at' => now()->toIso8601String(),
+                        'is_ok' => str_starts_with($trimmed, 'OK:'),
+                        'is_err' => str_starts_with($trimmed, 'ERR:'),
+                    ], now()->addMinutes(10));
+                }
                 return;
             }
 

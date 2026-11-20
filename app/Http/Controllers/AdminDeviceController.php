@@ -956,9 +956,9 @@ class AdminDeviceController extends Controller
                 // 2. Main Pump (Pompa Utama / Irigasi)
                 elseif (str_contains($name, 'pompa') || str_contains($name, 'pump') || $name === 'st_pmp') {
                     if ($newValue) {
-                        $message = "<PMP_ON#0#0#>";
+                        $message = "<PMP_ON#0#1#>";
                     } else {
-                        $message = "<PMP_OFF#>";
+                        $message = "<PMP_OFF#0#>";
                     }
                 }
                 // 3. Components
@@ -972,12 +972,12 @@ class AdminDeviceController extends Controller
                     $message = "<MIS#{$val}#>";
                 } elseif (str_contains($name, 'lamp') || $name === 'st_lam') {
                     $message = "<LAM#{$val}#>";
-                } elseif ($name === 'sts_sld_op') {
-                    $message = "<SLD_OP#{$val}#>";
-                } elseif ($name === 'sts_sld_tu') {
-                    $message = "<SLD_TU#{$val}#>";
-                } elseif ($name === 'sts_cool') {
-                    $message = "<COOL#{$val}#>";
+                } elseif ($name === 'sts_sld_op' || $name === 'st_sld_op') {
+                    $message = $newValue ? "<BUKA_#>" : "<STOP_#>";
+                } elseif ($name === 'sts_sld_tu' || $name === 'st_sld_tu') {
+                    $message = $newValue ? "<TUTUP_#>" : "<STOP_#>";
+                } elseif (str_contains($name, 'cool') || $name === 'st_cool') {
+                    $message = $newValue ? "<COOL_ON#>" : "<COOL_OFF#>";
                 }
                 // 4. Air Baku & Air Pupuk
                 elseif ($name === 'st_bak') {
@@ -1138,7 +1138,7 @@ class AdminDeviceController extends Controller
                 $zone = $request->input('zone', 1);
                 $message = "<PMP_ON#{$inputType}#{$zone}#>";
             } else {
-                $message = "<PMP_OFF#>";
+                $message = "<PMP_OFF#0#>";
             }
 
             $host = config('mqtt.host', env('MQTT_HOST', 'smartagri.web.id'));
@@ -1203,7 +1203,7 @@ class AdminDeviceController extends Controller
             if ($turnOn) {
                 $message = "<PMP_ON#{$waterType}#{$zone}#>";
             } else {
-                $message = "<PMP_OFF#>";
+                $message = "<PMP_OFF#0#>";
             }
 
             $host = config('mqtt.host', env('MQTT_HOST', 'smartagri.web.id'));

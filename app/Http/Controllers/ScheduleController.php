@@ -85,10 +85,18 @@ class ScheduleController extends Controller
         // Get cached schedules (with fallback to legacy cache prefixes if any)
         $cachedSchedules = $this->getCachedSchedulesForDevice($device->id);
 
-        // Smart Farm: Auto-request jadwal dari device setiap kali halaman dibuka / di-load
+        // Auto-request jadwal dari device setiap kali halaman dibuka / di-load
         if ($device->type === 'smart_farm') {
             $topic = $device->mqtt_topic_schedule ?: $device->mqtt_topic;
             $this->smartFarmService->sendJadwalGet($topic);
+        } else {
+            // Smart GH V3 / Smart GH: Publish CMD:STATUS agar alat mengirim ulang seluruh data & jadwal
+            try {
+                $topic = $device->mqtt_topic_schedule ?: $device->mqtt_topic;
+                $this->mqttService->requestStatus($topic, $device->token);
+            } catch (\Throwable $e) {
+                // Ignore if MQTT fails
+            }
         }
 
         return view('schedule.index', compact('userDevice', 'device', 'scheduleConfig', 'cachedSchedules', 'isAdminView'));
@@ -175,6 +183,45 @@ class ScheduleController extends Controller
             if (!empty($validated['duration'])) {
                 $msg .= " (Durasi: {$validated['duration']} menit, selesai pukul {$offTime})";
             }
+
+            // Simpan ke cache agar tampilan web langsung terupdate sebelum feedback berkala dari alat tiba
+            $displaySlot = (int) $validated['slot_id'];
+            $slotKey = "sch{$displaySlot}";
+            $cacheKey = "device_schedules_{$device->id}";
+            $cachedSchedules = \Cache::get($cacheKey, []);
+
+            // Format nama hari untuk tampilan
+            $daysArray = [];
+            $daysInput = $schedule['days'] ?? '1234567';
+            $dayNames = [1 => 'Sen', 2 => 'Sel', 3 => 'Rab', 4 => 'Kam', 5 => 'Jum', 6 => 'Sab', 7 => 'Min'];
+            if (is_array($daysInput)) {
+                $daysArray = $daysInput;
+            } elseif (is_string($daysInput)) {
+                if (preg_match('/^[01]{7}$/', $daysInput)) {
+                    // Binary: Min, Sen, Sel, Rab, Kam, Jum, Sab
+                    $binNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+                    for ($b = 0; $b < 7; $b++) {
+                        if ($daysInput[$b] === '1') $daysArray[] = $binNames[$b];
+                    }
+                } else {
+                    for ($i = 0; $i < strlen($daysInput); $i++) {
+                        $dNum = (int) $daysInput[$i];
+                        if (isset($dayNames[$dNum])) $daysArray[] = $dayNames[$dNum];
+                    }
+                }
+            }
+
+            $cachedSchedules[$slotKey] = [
+                'slot_key' => $slotKey,
+                'on_time' => $schedule['on'] . ':00',
+                'duration' => (int) ($schedule['duration'] ?? 5),
+                'sector' => (int) ($schedule['sector'] ?? 1),
+                'name' => strtoupper($outputKey),
+                'days' => $daysArray,
+                'is_active' => true,
+                'updated_at' => now()->toIso8601String(),
+            ];
+            \Cache::put($cacheKey, $cachedSchedules, now()->addDays(30));
 
             return response()->json([
                 'success' => true,
@@ -322,6 +369,15 @@ class ScheduleController extends Controller
                 $device->token,
                 (int) $slotId
             );
+
+            if ($success) {
+                $displaySlot = (int) $slotId;
+                $slotKey = "sch{$displaySlot}";
+                $cacheKey = "device_schedules_{$device->id}";
+                $cachedSchedules = \Cache::get($cacheKey, []);
+                unset($cachedSchedules[$slotKey]);
+                \Cache::put($cacheKey, $cachedSchedules, now()->addDays(30));
+            }
         }
 
         if ($success) {

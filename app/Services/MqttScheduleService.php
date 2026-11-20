@@ -252,22 +252,17 @@ class MqttScheduleService
      * @param string $mqttTopic MQTT topic dari device
      * @param string $deviceToken Token device
      */
-    public function requestStatus(string $mqttTopic, string $deviceToken): bool
+    public function requestStatus(string $mqttTopic, string $deviceToken = ''): bool
     {
         try {
             $mqtt = $this->connect();
-            $topic = env('MQTT_TOPIC_PUB', '/smartgh01/pub');
-
-            $message = json_encode([
-                'type' => 'status_request',
-                'token' => $deviceToken,
-                'timestamp' => now()->toIso8601String(),
-            ]);
+            $topic = rtrim($mqttTopic, '/') . '/sub';
+            $message = 'CMD:STATUS';
 
             $mqtt->publish($topic, $message, 1);
             $mqtt->disconnect();
 
-            Log::info("Status request sent to topic {$topic}");
+            Log::info("Status request CMD:STATUS sent to topic {$topic}");
 
             return true;
 
