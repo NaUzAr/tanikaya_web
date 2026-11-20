@@ -40,32 +40,28 @@ class DeviceScheduleData extends Model
     public static function parseFromDevice(string $raw): array
     {
         $rawTrim = trim($raw);
-        // Empty schedule check (misal: _:_, --:--, kosong, atau kosong)
-        if (str_starts_with($rawTrim, '_:_') || 
-            str_starts_with($rawTrim, '--') || 
-            str_contains(strtolower($rawTrim), 'kosong') || 
-            empty($rawTrim)) {
-            return [
-                'is_active' => false,
-                'on_time' => null,
-                'duration' => 0,
-                'sector' => 0,
-                'name' => null,
-                'days' => [],
-            ];
-        }
-
-        // Parse format: "HH:MM-DURATION-SECTOR-NAME  DAYS"
-        // Example: "14:27-1-2-PUPUK  Min, Sen, Sel, Rab, Kam, Jum, Sab"
-
         $result = [
-            'is_active' => true,
+            'is_active' => false,
             'on_time' => null,
             'duration' => 0,
             'sector' => 0,
             'name' => null,
             'days' => [],
+            'raw_time_empty' => false,
         ];
+
+        // Empty schedule check (misal: _:_, --:--, kosong, atau string kosong)
+        if (str_starts_with($rawTrim, '_:_') || 
+            str_starts_with($rawTrim, '--') || 
+            str_contains(strtolower($rawTrim), 'kosong') || 
+            empty($rawTrim)) {
+            return $result;
+        }
+
+        // Format: "HH:MM-DURATION-SECTOR-NAME  DAYS"
+        // Example 1: "06:30-15-1-BAKU  Min, Sen, Sel, Rab, Kam, Jum, Sab"
+        // Example 2 (real hardware): ":-5-1-BAKU  Min, Sen, Sel, Rab, Kam, Jum, Sab"
+        // Example 3 (empty hardware): ":-0-0-_  -"
 
         // Split by first occurrence of double space to separate name from days
         $parts = preg_split('/\s{2,}/', $rawTrim, 2);
@@ -74,7 +70,8 @@ class DeviceScheduleData extends Model
             // Parse days from second part
             $daysStr = trim($parts[1]);
             if (!empty($daysStr) && $daysStr !== '-') {
-                $result['days'] = array_map('trim', explode(',', $daysStr));
+                $days = array_values(array_filter(array_map('trim', explode(',', $daysStr))));
+                $result['days'] = $days;
             }
         }
 
@@ -83,11 +80,16 @@ class DeviceScheduleData extends Model
         $segments = explode('-', $mainPart, 4);
 
         if (count($segments) >= 4) {
-            // Time (HH:MM)
-            if (preg_match('/^\d{1,2}:\d{2}$/', $segments[0])) {
-                $result['on_time'] = $segments[0] . ':00'; // Add seconds for TIME format
+            $timeStr = trim($segments[0]);
+            if (preg_match('/^(\d{1,2}):(\d{1,2})$/', $timeStr, $tm)) {
+                $result['on_time'] = sprintf('%02d:%02d:00', (int)$tm[1], (int)$tm[2]);
+            } elseif (preg_match('/^:(\d{1,2})$/', $timeStr, $tm)) {
+                $result['on_time'] = sprintf('00:%02d:00', (int)$tm[1]);
+            } elseif (preg_match('/^(\d{1,2}):?$/', $timeStr, $tm)) {
+                $result['on_time'] = sprintf('%02d:00:00', (int)$tm[1]);
             } else {
-                $result['is_active'] = false;
+                $result['on_time'] = '00:00:00';
+                $result['raw_time_empty'] = true;
             }
 
             // Duration
@@ -98,8 +100,16 @@ class DeviceScheduleData extends Model
 
             // Name
             $result['name'] = trim($segments[3] ?? '');
-        } else {
-            $result['is_active'] = false;
+
+            // Validasi keaktifan jadwal dari parameter hardware
+            $hasValidDuration = $result['duration'] > 0;
+            $hasValidName = !empty($result['name']) && $result['name'] !== '_' && $result['name'] !== '-' && strtolower($result['name']) !== 'kosong';
+            $hasValidDays = !empty($result['days']) && $result['days'] !== ['-'];
+
+            $result['is_active'] = $hasValidDuration && $hasValidName && $hasValidDays;
+            if (!$result['is_active']) {
+                $result['on_time'] = null;
+            }
         }
 
         return $result;

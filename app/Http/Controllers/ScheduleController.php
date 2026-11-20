@@ -216,12 +216,20 @@ class ScheduleController extends Controller
                 'on_time' => $schedule['on'] . ':00',
                 'duration' => (int) ($schedule['duration'] ?? 5),
                 'sector' => (int) ($schedule['sector'] ?? 1),
+                'blok' => (int) ($schedule['sector'] ?? 1),
                 'name' => strtoupper($outputKey),
                 'days' => $daysArray,
                 'is_active' => true,
                 'updated_at' => now()->toIso8601String(),
             ];
             \Cache::put($cacheKey, $cachedSchedules, now()->addDays(30));
+            \Cache::put("device_schedules_synced_at_{$device->id}", now()->toIso8601String(), now()->addDays(30));
+
+            // Request status dari alat agar sync konfirmasi
+            usleep(250000);
+            try {
+                $this->mqttService->requestStatus($topic, $device->token ?? '');
+            } catch (\Throwable $e) {}
 
             return response()->json([
                 'success' => true,
@@ -366,17 +374,24 @@ class ScheduleController extends Controller
         else {
             $success = $this->mqttService->deleteSchedule(
                 $topic,
-                $device->token,
+                $device->token ?? '',
                 (int) $slotId
             );
 
             if ($success) {
+                // Request refresh status dari alat
+                usleep(250000);
+                try {
+                    $this->mqttService->requestStatus($topic, $device->token ?? '');
+                } catch (\Throwable $e) {}
+
                 $displaySlot = (int) $slotId;
                 $slotKey = "sch{$displaySlot}";
                 $cacheKey = "device_schedules_{$device->id}";
                 $cachedSchedules = \Cache::get($cacheKey, []);
                 unset($cachedSchedules[$slotKey]);
                 \Cache::put($cacheKey, $cachedSchedules, now()->addDays(30));
+                \Cache::put("device_schedules_synced_at_{$device->id}", now()->toIso8601String(), now()->addDays(30));
             }
         }
 
@@ -610,26 +625,28 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Smart Farm: Request sinkronisasi jadwal dari perangkat (CMD:JADWAL_GET)
+     * Request sinkronisasi jadwal dari perangkat
      */
     public function syncFromDevice($userDeviceId)
     {
         $device = $this->getDevice($userDeviceId);
-
-        if ($device->type !== 'smart_farm') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Fitur sinkronisasi ini khusus perangkat Smart Farm.',
-            ], 400);
-        }
-
         $topic = $device->mqtt_topic_schedule ?: $device->mqtt_topic;
-        $success = $this->smartFarmService->sendJadwalGet($topic);
+
+        if ($device->type === 'smart_farm') {
+            $success = $this->smartFarmService->sendJadwalGet($topic);
+        } else {
+            // Smart GH V3, Smart GH, etc: Minta alat mengirim status dan jadwal terbaru
+            try {
+                $success = $this->mqttService->requestStatus($topic, $device->token ?? '');
+            } catch (\Throwable $e) {
+                $success = false;
+            }
+        }
 
         if ($success) {
             return response()->json([
                 'success' => true,
-                'message' => 'Permintaan jadwal (CMD:JADWAL_GET) terkirim ke perangkat! Data sedang disinkronkan...',
+                'message' => 'Permintaan jadwal terkirim ke perangkat! Data sedang disinkronkan...',
             ]);
         }
 

@@ -607,12 +607,20 @@ class MqttListener extends Command
             // Parse using model method
             $parsed = \App\Models\DeviceScheduleData::parseFromDevice($rawValue);
 
+            $existing = $existingSchedules[$key] ?? null;
+            $finalOnTime = $parsed['on_time'];
+            // If device sends empty/default time string (":") and cache already had a known non-zero time, retain it
+            if ($parsed['is_active'] && ($parsed['raw_time_empty'] ?? false) && !empty($existing['on_time']) && $existing['on_time'] !== '00:00:00') {
+                $finalOnTime = $existing['on_time'];
+            }
+
             // Store in array with slot key
             $existingSchedules[$key] = [
                 'slot_key' => $key,
-                'on_time' => $parsed['on_time'],
+                'on_time' => $finalOnTime,
                 'duration' => $parsed['duration'],
                 'sector' => $parsed['sector'],
+                'blok' => $parsed['sector'],
                 'name' => $parsed['name'],
                 'days' => $parsed['days'],
                 'is_active' => $parsed['is_active'],
@@ -620,13 +628,14 @@ class MqttListener extends Command
             ];
 
             if ($parsed['is_active']) {
-                $this->line("           • {$key}: {$parsed['name']} @ {$parsed['on_time']} ({$parsed['duration']}min, Sektor {$parsed['sector']})");
+                $this->line("           • {$key}: {$parsed['name']} @ {$finalOnTime} ({$parsed['duration']}min, Sektor {$parsed['sector']})");
                 $savedCount++;
             }
         }
 
-        // Save merged schedules to cache (24 hours expiry)
-        \Cache::put($cacheKey, $existingSchedules, now()->addHours(24));
+        // Save merged schedules to cache (30 days expiry)
+        \Cache::put($cacheKey, $existingSchedules, now()->addDays(30));
+        \Cache::put("device_schedules_synced_at_{$device->id}", now()->toIso8601String(), now()->addDays(30));
 
         if ($savedCount > 0) {
             $this->info("           ✅ Cached {$savedCount} active schedules");

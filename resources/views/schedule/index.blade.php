@@ -619,26 +619,22 @@
                 </p>
             </div>
             <div class="header-actions-wrapper">
-                @if($device->type === 'smart_farm')
-                    <span id="sync-status-indicator" class="badge rounded-pill d-inline-flex align-items-center gap-1" style="display: none !important; font-size: 0.78rem; padding: 0.55rem 0.9rem; background: rgba(14, 165, 233, 0.12); color: #0284c7; border: 1px solid rgba(14, 165, 233, 0.25);">
-                        <i class="bi bi-arrow-repeat spin-icon" id="indicator-spin-icon"></i> <span id="sync-status-text">Sinkron ke alat...</span>
-                    </span>
-                    <div class="header-actions-row">
-                        <button type="button" id="btn-sync-jadwal" class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1 shadow-sm" style="border-radius: 50px; padding: 0.6rem 1.15rem; font-weight: 600;" onclick="syncJadwalDevice()" title="Tarik seluruh jadwal dari memori alat (EEPROM)">
-                            <i class="bi bi-arrow-repeat" id="icon-sync-jadwal"></i> <span>Tarik dari Alat</span>
-                        </button>
+                <span id="sync-status-indicator" class="badge rounded-pill d-inline-flex align-items-center gap-1" style="display: none !important; font-size: 0.78rem; padding: 0.55rem 0.9rem; background: rgba(14, 165, 233, 0.12); color: #0284c7; border: 1px solid rgba(14, 165, 233, 0.25);">
+                    <i class="bi bi-arrow-repeat spin-icon" id="indicator-spin-icon"></i> <span id="sync-status-text">Sinkron ke alat...</span>
+                </span>
+                <div class="header-actions-row">
+                    <button type="button" id="btn-sync-jadwal" class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1 shadow-sm" style="border-radius: 50px; padding: 0.6rem 1.15rem; font-weight: 600;" onclick="syncJadwalDevice()" title="Tarik seluruh jadwal dari memori alat">
+                        <i class="bi bi-arrow-repeat" id="icon-sync-jadwal"></i> <span>Tarik dari Alat</span>
+                    </button>
+                    @if($device->type === 'smart_farm')
                         <button type="button" class="btn btn-danger btn-sm d-inline-flex align-items-center gap-1 shadow-sm" style="border-radius: 50px; padding: 0.6rem 1.15rem;" onclick="stopSiram()">
                             <i class="bi bi-stop-circle-fill"></i> <span>Stop Siram</span>
                         </button>
-                        <a href="{{ ($isAdminView ?? false) ? route('admin.device.monitoring', $device->id) : route('monitoring.show', $userDevice->id) }}" class="btn btn-glass d-inline-flex align-items-center gap-1">
-                            <i class="bi bi-arrow-left"></i> <span>Kembali</span>
-                        </a>
-                    </div>
-                @else
-                    <a href="{{ ($isAdminView ?? false) ? route('admin.device.monitoring', $device->id) : route('monitoring.show', $userDevice->id) }}" class="btn btn-glass d-inline-flex align-items-center gap-2">
-                        <i class="bi bi-arrow-left me-md-1"></i> <span class="d-none d-md-inline">Kembali ke Device</span>
+                    @endif
+                    <a href="{{ ($isAdminView ?? false) ? route('admin.device.monitoring', $device->id) : route('monitoring.show', $userDevice->id) }}" class="btn btn-glass d-inline-flex align-items-center gap-1">
+                        <i class="bi bi-arrow-left"></i> <span>Kembali</span>
                     </a>
-                @endif
+                </div>
             </div>
         </div>
 
@@ -655,39 +651,38 @@
                 $maxSectors = $isSmartFarm ? 3 : ($scheduleConfig->max_sectors ?? 1);
             @endphp
             
-            {{-- Smart Farm Schedule Filter / Grouping Pills --}}
-            @if($isSmartFarm)
-                @php
-                    $totalActive = 0;
-                    for($si = 1; $si <= $maxSlots; $si++) {
-                        if(!empty($cachedSchedules["sch{$si}"]['is_active'])) $totalActive++;
-                    }
-                @endphp
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 p-2 px-3 rounded-pill" style="background: rgba(255,255,255,0.7); border: 1px solid var(--glass-border);">
-                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                        <span class="small text-muted fw-bold me-1" style="font-size: 0.76rem;"><i class="bi bi-funnel-fill text-primary"></i> Filter:</span>
-                        <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 py-1 fw-bold sch-filter-btn active" style="font-size: 0.78rem;" onclick="filterSchedules('all', this)" id="btn-filter-all">
-                            Semua ({{ $maxSlots }})
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold sch-filter-btn" style="font-size: 0.78rem;" onclick="filterSchedules('active', this)">
-                            <i class="bi bi-check-circle-fill me-1"></i>Aktif Saja (<span id="filter-count-active">{{ $totalActive }}</span>)
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-bold sch-filter-btn" style="font-size: 0.78rem;" onclick="filterSchedules('blok1', this)">
-                            <i class="bi bi-geo-alt-fill me-1" style="color: #10b981;"></i>Blok 1
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-bold sch-filter-btn" style="font-size: 0.78rem;" onclick="filterSchedules('blok2', this)">
-                            <i class="bi bi-geo-alt-fill me-1" style="color: #0ea5e9;"></i>Blok 2
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-bold sch-filter-btn" style="font-size: 0.78rem;" onclick="filterSchedules('blok3', this)">
-                            <i class="bi bi-geo-alt-fill me-1" style="color: #8b5cf6;"></i>Blok 3
-                        </button>
-                    </div>
-                    <div class="small text-muted d-flex align-items-center gap-2">
-                        <span id="badge-count-active" class="badge rounded-pill bg-success text-white px-2 py-1" style="font-size: 0.72rem;">{{ $totalActive }} Aktif</span>
-                        <span id="badge-count-empty" class="badge rounded-pill bg-secondary text-white px-2 py-1" style="font-size: 0.72rem;">{{ $maxSlots - $totalActive }} Kosong</span>
-                    </div>
+            {{-- Schedule Filter / Grouping Pills --}}
+            @php
+                $totalActive = 0;
+                for($si = 1; $si <= $maxSlots; $si++) {
+                    if(!empty($cachedSchedules["sch{$si}"]['is_active'])) $totalActive++;
+                }
+            @endphp
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 p-2 px-3 rounded-pill" style="background: rgba(255,255,255,0.7); border: 1px solid var(--glass-border);">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="small text-muted fw-bold me-1" style="font-size: 0.76rem;"><i class="bi bi-funnel-fill text-primary"></i> Filter:</span>
+                    <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 py-1 fw-bold sch-filter-btn active" style="font-size: 0.78rem;" onclick="filterSchedules('all', this)" id="btn-filter-all">
+                        Semua ({{ $maxSlots }})
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold sch-filter-btn" style="font-size: 0.78rem;" onclick="filterSchedules('active', this)">
+                        <i class="bi bi-check-circle-fill me-1"></i>Aktif Saja (<span id="filter-count-active">{{ $totalActive }}</span>)
+                    </button>
+                    @if($maxSectors > 1 || $isSector)
+                        @php
+                            $secColors = ['#10b981', '#0ea5e9', '#8b5cf6', '#f59e0b'];
+                        @endphp
+                        @for($sec = 1; $sec <= $maxSectors; $sec++)
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-bold sch-filter-btn" style="font-size: 0.78rem;" onclick="filterSchedules('blok{{ $sec }}', this)">
+                                <i class="bi bi-geo-alt-fill me-1" style="color: {{ $secColors[($sec - 1) % 4] }};"></i>{{ $isSmartFarm ? 'Blok ' . $sec : 'Zona ' . $sec }}
+                            </button>
+                        @endfor
+                    @endif
                 </div>
-            @endif
+                <div class="small text-muted d-flex align-items-center gap-2">
+                    <span id="badge-count-active" class="badge rounded-pill bg-success text-white px-2 py-1" style="font-size: 0.72rem;">{{ $totalActive }} Aktif</span>
+                    <span id="badge-count-empty" class="badge rounded-pill bg-secondary text-white px-2 py-1" style="font-size: 0.72rem;">{{ $maxSlots - $totalActive }} Kosong</span>
+                </div>
+            </div>
 
             <div class="table-responsive">
                 <table class="table table-glass">
@@ -1286,15 +1281,13 @@
 
                 let show = true;
                 if (filter === 'active') show = isActive;
-                else if (filter === 'blok1') show = isActive && (blok == '1');
-                else if (filter === 'blok2') show = isActive && (blok == '2');
-                else if (filter === 'blok3') show = isActive && (blok == '3');
+                else if (filter.startsWith('blok')) show = isActive && (blok == filter.replace('blok', ''));
 
                 row.style.display = show ? '' : 'none';
             }
         }
 
-        // Smart Farm: Tarik jadwal dari perangkat via MQTT
+        // Tarik jadwal dari perangkat via MQTT
         async function syncJadwalDevice() {
             const btn = document.getElementById('btn-sync-jadwal');
             const icon = document.getElementById('icon-sync-jadwal');
@@ -1326,7 +1319,6 @@
             }
         }
 
-        @if($device->type === 'smart_farm')
         window.cachedSchedules = @json($cachedSchedules);
         const targetId = '{{ ($isAdminView ?? false) ? $device->id : ($userDevice->id ?? $device->id) }}';
 
@@ -1406,6 +1398,23 @@
                     }
                 } else {
                     cellPupuk.innerHTML = `<span style="color: var(--text-secondary);">-</span>`;
+                }
+            }
+
+            // Input (Air Baku / Air Pupuk)
+            const cellInput = row.querySelector('[data-label="Input"]');
+            if (cellInput) {
+                if (isActive) {
+                    const schName = (sch.name || '').toUpperCase();
+                    if (schName === 'PUPUK') {
+                        cellInput.innerHTML = `<span class="badge rounded-pill" style="background: rgba(234, 179, 8, 0.1); color: #ca8a04; border: 1px solid rgba(234, 179, 8, 0.2);"><i class="bi bi-droplet-half me-1"></i>Air Pupuk</span>`;
+                    } else if (schName === 'BAKU') {
+                        cellInput.innerHTML = `<span class="badge rounded-pill" style="background: rgba(34, 197, 94, 0.1); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.2);"><i class="bi bi-water me-1"></i>Air Baku</span>`;
+                    } else {
+                        cellInput.innerHTML = `<span class="badge rounded-pill bg-secondary">${sch.name || '-'}</span>`;
+                    }
+                } else {
+                    cellInput.innerHTML = `<span style="color: var(--text-secondary);">-</span>`;
                 }
             }
 
@@ -1560,7 +1569,6 @@
                 console.warn('Autoload 1 menit gagal:', err);
             }
         }, 60000); // 60.000 ms = 1 menit
-        @endif
     </script>
     <style>
         @keyframes spin { 100% { transform: rotate(360deg); } }
