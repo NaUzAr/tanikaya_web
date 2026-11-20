@@ -574,7 +574,7 @@
             </h2>
             <div class="d-flex gap-2 header-actions flex-shrink-0">
                 @if(!session('is_pwa'))
-                    <button onclick="openSwarataniApp(event)" class="btn btn-app btn-action btn-action-custom" title="Buka Aplikasi">
+                    <button onclick="openTanikayaApp(event)" class="btn btn-app btn-action btn-action-custom" title="Buka Aplikasi">
                         <i class="bi bi-phone me-sm-1"></i><span class="action-text"> Buka Aplikasi</span>
                     </button>
                 @endif
@@ -867,23 +867,28 @@
     @include('partials.chatbot')
 
     <script>
-        function openSwarataniApp(e) {
-            e.preventDefault();
+        function openTanikayaApp(e) {
+            if (e) e.preventDefault();
             
-            // Sesuai dengan config di swaratani_mobile/android/app/build.gradle
-            var packageName = "id.swaratani.swaratani_mobile";
+            // Sesuai dengan config di tanikaya_app/android/app/build.gradle.kts
+            var packageName = "{{ config('app.mobile_package', 'id.tanikaya.tanikaya_app') }}";
+            var scheme = "{{ config('app.mobile_scheme', 'tanikaya') }}";
             var playStoreLink = "https://play.google.com/store/apps/details?id=" + packageName;
             
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
             
             if (/android/i.test(userAgent)) {
                 // Di Android, gunakan Intent untuk buka aplikasi. Jika belum install, browser akan fallback ke PlayStore (browser_fallback_url)
-                var intentUrl = "intent://#Intent;scheme=swaratani;package=" + packageName + ";S.browser_fallback_url=" + encodeURIComponent(playStoreLink) + ";end";
+                var intentUrl = "intent://#Intent;scheme=" + scheme + ";package=" + packageName + ";S.browser_fallback_url=" + encodeURIComponent(playStoreLink) + ";end";
                 window.location.href = intentUrl;
             } else {
                 // Untuk iOS atau desktop sementara buka PlayStore
                 window.location.href = playStoreLink;
             }
+        }
+
+        function openSwarataniApp(e) {
+            return openTanikayaApp(e);
         }
 
         document.querySelectorAll('.btn-favorite-dropdown').forEach(btn => {

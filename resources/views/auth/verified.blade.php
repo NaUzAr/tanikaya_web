@@ -187,7 +187,7 @@
         </p>
 
         <div class="d-flex flex-column gap-3">
-            <button onclick="openSwarataniApp(event)" class="btn-app-action btn-primary-action">
+            <button onclick="openTanikayaApp(event)" class="btn-app-action btn-primary-action">
                 <i class="bi bi-phone"></i>
                 Buka Aplikasi Android
             </button>
@@ -199,18 +199,22 @@
     </div>
 
     <script>
-        function openSwarataniApp(e) {
+        function openTanikayaApp(e) {
             if (e) e.preventDefault();
-            var packageName = "id.swaratani.swaratani_mobile";
+            var packageName = "{{ config('app.mobile_package', 'id.tanikaya.tanikaya_app') }}";
+            var scheme = "{{ config('app.mobile_scheme', 'tanikaya') }}";
             var playStoreLink = "https://play.google.com/store/apps/details?id=" + packageName;
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
             if (/android/i.test(userAgent)) {
-                var intentUrl = "intent://#Intent;scheme=swaratani;package=" + packageName + ";S.browser_fallback_url=" + encodeURIComponent(playStoreLink) + ";end";
+                var intentUrl = "intent://#Intent;scheme=" + scheme + ";package=" + packageName + ";S.browser_fallback_url=" + encodeURIComponent(playStoreLink) + ";end";
                 window.location.href = intentUrl;
             } else {
                 window.location.href = playStoreLink;
             }
+        }
+        function openSwarataniApp(e) {
+            return openTanikayaApp(e);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

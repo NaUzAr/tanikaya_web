@@ -17,6 +17,8 @@ return [
     'theme' => env('APP_THEME', 'maheswara'),
     'logo' => env('APP_LOGO', 'images/logo.png'),
     'tagline' => env('APP_TAGLINE', 'Best Solution for Agriculture Machinery'),
+    'mobile_package' => env('MOBILE_PACKAGE_NAME', 'id.tanikaya.tanikaya_app'),
+    'mobile_scheme' => env('MOBILE_APP_SCHEME', 'tanikaya'),
 
     /*
     |--------------------------------------------------------------------------
